@@ -5,7 +5,6 @@ import { PrismaService } from '../prisma/prisma.service';
 import { AuthDto } from './dto/auth.dto';
 import * as argon from 'argon2';
 import { ConfigService } from '@nestjs/config';
-import { tokenToString } from 'typescript';
 
 Prisma;
 @Injectable()

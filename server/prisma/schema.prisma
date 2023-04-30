@@ -21,6 +21,7 @@ model User {
   firstName String?
   lastName String?
   bookmarks Bookmark[]
+  todos Todo[]
   // with this code above now one user can have many bookmarks
 
 
@@ -42,4 +43,19 @@ model Bookmark{
   user User @relation(fields: [userId], references: [id])
   @@map("bookmarks")
 
+}
+
+
+model Todo{
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  title String
+  description String?
+  status String
+
+  userId Int
+  user User @relation(fields: [userId], references: [id])
+  @@map("todos")
 }
