@@ -1,13 +1,15 @@
 import {
   Body,
   Controller,
-  Get,
   HttpCode,
   HttpStatus,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthDto } from './dto';
+import { RtGuard } from './guard';
+import { GetUser, Public } from 'src/auth/decorator';
 
 //  this does the job for '/auth/'
 @Controller('auth')
@@ -15,7 +17,9 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   // which becomes 'auth/signup' by default
+  @Public()
   @Post('signup')
+  @HttpCode(HttpStatus.CREATED)
   signup(@Body() dto: AuthDto) {
     // DTO ( Data Transfer Object )
 
@@ -23,19 +27,32 @@ export class AuthController {
   }
 
   // can modify the http status code
+  @Public()
   @HttpCode(HttpStatus.OK)
   @Post('signin')
   signin(@Body() dto: AuthDto) {
     return this.authService.signin(dto);
   }
 
+  // @UseGuards(JwtGuard)
   @Post('logout')
-  logout() {
-    return this.authService.logout();
+  @HttpCode(HttpStatus.OK)
+  logout(@GetUser('sub') userId: number) {
+    return this.authService.logout(userId);
   }
 
+  @Public()
+  @UseGuards(RtGuard)
   @Post('refresh')
-  refreshTokens() {
-    return this.authService.refreshTokens();
+  @HttpCode(HttpStatus.OK)
+  refreshTokens(
+    @GetUser('sub') userId: number,
+    @GetUser('refreshToken') refreshToken: string,
+  ) {
+    console.log(userId, refreshToken);
+    return this.authService.refreshTokens({
+      userId,
+      refreshToken,
+    });
   }
 }

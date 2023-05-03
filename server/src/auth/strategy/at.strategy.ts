@@ -1,12 +1,12 @@
-import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
-import { Strategy, ExtractJwt } from 'passport-jwt';
+import { ExtractJwt, Strategy } from 'passport-jwt';
 import { ConfigService } from '@nestjs/config';
-import { SECRET_KEY } from 'src/constants';
+import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
+import { SECRET_KEY } from 'src/constants';
 
 @Injectable()
-export class AtStrategy extends PassportStrategy(Strategy, 'access-jwt') {
+export class AtStrategy extends PassportStrategy(Strategy, 'jwt') {
   constructor(config: ConfigService, private prisma: PrismaService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -22,7 +22,6 @@ export class AtStrategy extends PassportStrategy(Strategy, 'access-jwt') {
     });
 
     delete user.hash;
-    delete user.hashedRT;
 
     return user;
   }
