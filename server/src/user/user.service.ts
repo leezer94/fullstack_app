@@ -21,7 +21,6 @@ export class UserService {
     });
 
     delete user.hash;
-    delete user.hashedRT;
 
     return user;
   }

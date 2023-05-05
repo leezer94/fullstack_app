@@ -7,6 +7,7 @@ import { AuthDto } from '../src/auth/dto/auth.dto';
 import { EditBookmarkDto } from '../src/bookmark/dto/edit-bookmark.dto';
 import { CreateBookmarkDto } from '../src/bookmark/dto/create-bookmark.dto';
 import { EditUserDto } from '../src/user/dto/edit-user.dto';
+import { CreateTodoDto } from '../src/todo/dto/create-todo.dto';
 
 describe('App e2e', () => {
   let app: INestApplication;
@@ -99,7 +100,45 @@ describe('App e2e', () => {
           .post('/auth/signin')
           .withBody(dto)
           .expectStatus(200)
-          .stores('userAt', 'access_token');
+          .stores('access_token', 'access_token')
+          .stores('refresh_token', 'refresh_token');
+      });
+    });
+
+    describe('POST refresh tokens', () => {
+      it('should throw an error with status code 401 when refresh token is not given', () => {
+        return pactum.spec().post('/auth/refresh').expectStatus(401);
+      });
+
+      it('should update access token and refresh token', () => {
+        return pactum
+          .spec()
+          .post('/auth/refresh')
+          .withHeaders({
+            Authorization: `Bearer $S{refresh_token}`,
+          })
+          .expectStatus(200);
+      });
+    });
+
+    describe('POST logout', () => {
+      it('should delete hashed refresh token', () => {
+        return pactum
+          .spec()
+          .post('/auth/logout')
+          .withHeaders({
+            Authorization: `Bearer $S{access_token}`,
+          })
+          .withPathParams('id', '$S{userId}')
+          .expectStatus(200);
+      });
+
+      it('should throw an error with status 401 if access token is not given', () => {
+        return pactum
+          .spec()
+          .post('/auth/logout')
+          .withPathParams('id', '$S{userId}')
+          .expectStatus(401);
       });
     });
   });
@@ -115,7 +154,7 @@ describe('App e2e', () => {
         return pactum
           .spec()
           .withHeaders({
-            Authorization: `Bearer $S{userAt}`,
+            Authorization: `Bearer $S{access_token}`,
           })
           .get('/users/me')
           .expectStatus(200);
@@ -123,17 +162,17 @@ describe('App e2e', () => {
     });
 
     describe('PATCH /users', () => {
-      it('should edit user', () => {
+      it('should edit user details', () => {
         const dto: EditUserDto = {
           firstName: 'Keonhee',
           lastName: 'Lee',
-          email: '2kunhee94@gmail.com',
+          email: '2kunhee94@edited.com',
         };
         return pactum
           .spec()
           .patch('/users')
           .withHeaders({
-            Authorization: `Bearer $S{userAt}`,
+            Authorization: `Bearer $S{access_token}`,
           })
           .withBody(dto)
           .expectStatus(200)
@@ -151,7 +190,7 @@ describe('App e2e', () => {
           .spec()
           .get('/bookmarks')
           .withHeaders({
-            Authorization: `Bearer $S{userAt}`,
+            Authorization: `Bearer $S{access_token}`,
           })
           .expectStatus(200)
           .expectBody([]);
@@ -168,7 +207,7 @@ describe('App e2e', () => {
           .spec()
           .post('/bookmarks')
           .withHeaders({
-            Authorization: `Bearer $S{userAt}`,
+            Authorization: `Bearer $S{access_token}`,
           })
           .withBody(dto)
           .expectStatus(201)
@@ -182,7 +221,7 @@ describe('App e2e', () => {
           .spec()
           .get('/bookmarks')
           .withHeaders({
-            Authorization: `Bearer $S{userAt}`,
+            Authorization: `Bearer $S{access_token}`,
           })
           .expectStatus(200)
           .expectJsonLength(1);
@@ -196,7 +235,7 @@ describe('App e2e', () => {
           .get('/bookmarks/{id}')
           .withPathParams('id', '$S{bookmarkId}')
           .withHeaders({
-            Authorization: `Bearer $S{userAt}`,
+            Authorization: `Bearer $S{access_token}`,
           })
           .expectStatus(200)
           .expectBodyContains('$S{bookmarkId}');
@@ -216,7 +255,7 @@ describe('App e2e', () => {
           .withPathParams('id', '$S{bookmarkId}')
           .withBody(dto)
           .withHeaders({
-            Authorization: `Bearer $S{userAt}`,
+            Authorization: `Bearer $S{access_token}`,
           })
           .expectBodyContains(dto.title)
           .expectBodyContains(dto.description)
@@ -231,7 +270,7 @@ describe('App e2e', () => {
           .delete('/bookmarks/{id}')
           .withPathParams('id', '$S{bookmarkId}')
           .withHeaders({
-            Authorization: `Bearer $S{userAt}`,
+            Authorization: `Bearer $S{access_token}`,
           })
           .expectStatus(204);
       });
@@ -241,7 +280,7 @@ describe('App e2e', () => {
           .spec()
           .get('/bookmarks')
           .withHeaders({
-            Authorization: `Bearer $S{userAt}`,
+            Authorization: `Bearer $S{access_token}`,
           })
           .expectStatus(200)
           .expectBody([]);
@@ -253,12 +292,36 @@ describe('App e2e', () => {
   describe('/todos', () => {
     describe('GET /todos', () => {
       it.todo('should return empty todo');
+      it('should return empty todos', () => {
+        return pactum
+          .spec()
+          .get('/todos')
+          .withHeaders({
+            Authorization: `Bearer $S{access_token}`,
+          })
+          .expectStatus(200)
+          .expectBody([]);
+      });
     });
     describe('GET /todos/id', () => {
       it.todo('should return empty todo');
     });
     describe('POST /todos', () => {
-      it.todo('should create new todo');
+      const dto: CreateTodoDto = {
+        title: 'new Todo',
+        description: 'new Todo',
+      };
+
+      it('should create new todo', () => {
+        return pactum
+          .spec()
+          .post('/todos')
+          .withHeaders({
+            Authorization: `Bearer $S{access_token}`,
+          })
+          .withBody(dto)
+          .expectStatus(201);
+      });
     });
     describe('PATCH /todos/id', () => {
       it.todo('should update todo by id');

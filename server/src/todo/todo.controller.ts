@@ -10,11 +10,10 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { GetUser } from 'src/auth/decorator';
+import { GetUser } from '../auth/decorator';
 import { TodoService } from './todo.service';
 import { JwtGuard } from '../auth/guard/jwt.guard';
-import { CreateTodoDto } from 'src/todo/dto';
-import { EditTodoDto } from './dto/edit-todo.dto';
+import { CreateTodoDto, EditTodoDto } from '../todo/dto';
 import { HttpStatus } from '@nestjs/common';
 
 @UseGuards(JwtGuard)
