@@ -15,5 +15,5 @@ export class CreateTodoDto {
 
   @IsString()
   @IsOptional()
-  status?: 'NOT_STARTED' | 'IN PROGRESS' | 'COMPLETED';
+  status?: 'NOT_STARTED' | 'IN_PROGRESS' | 'COMPLETED';
 }

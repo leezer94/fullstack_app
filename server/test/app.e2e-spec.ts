@@ -291,7 +291,6 @@ describe('App e2e', () => {
   // Todos
   describe('/todos', () => {
     describe('GET /todos', () => {
-      it.todo('should return empty todo');
       it('should return empty todos', () => {
         return pactum
           .spec()
@@ -302,9 +301,6 @@ describe('App e2e', () => {
           .expectStatus(200)
           .expectBody([]);
       });
-    });
-    describe('GET /todos/id', () => {
-      it.todo('should return empty todo');
     });
     describe('POST /todos', () => {
       const dto: CreateTodoDto = {
@@ -320,19 +316,87 @@ describe('App e2e', () => {
             Authorization: `Bearer $S{access_token}`,
           })
           .withBody(dto)
-          .expectStatus(201);
+          .expectStatus(201)
+          .stores('todoId', 'id');
       });
     });
     describe('PATCH /todos/id', () => {
-      it.todo('should update todo by id');
+      const dto: CreateTodoDto = {
+        title: 'updated Todo',
+        description: 'updated Todo',
+        status: 'IN_PROGRESS',
+      };
+
+      it('should update todo by id', () => {
+        return pactum
+          .spec()
+          .patch('/todos/{id}')
+          .withPathParams('id', '$S{todoId}')
+          .withHeaders({
+            Authorization: `Bearer $S{access_token}`,
+          })
+          .withBody(dto)
+          .expectStatus(200);
+      });
+
+      it('should throw an error with status code 401 when access_token is not given', () => {
+        return pactum
+          .spec()
+          .patch('/todos/{id}')
+          .withPathParams('id', '$S{todoId}')
+          .withBody(dto)
+          .expectStatus(401);
+      });
+
+      it('should throw an error with status code 402 when status is not given', () => {
+        return pactum
+          .spec()
+          .patch('/todos/{id}')
+          .withPathParams('id', '$S{todoId}')
+          .withHeaders({
+            Authorization: `Bearer $S{access_token}`,
+          })
+          .withBody({
+            title: dto.title,
+            description: dto.description,
+          })
+          .expectStatus(403);
+      });
     });
     describe('DELETE /todos/id', () => {
-      it.todo('should delete todo by id');
+      it('should delete todo by id', () => {
+        return pactum
+          .spec()
+          .delete('/todos/{id}')
+          .withPathParams('id', '$S{todoId}')
+          .withHeaders({
+            Authorization: `Bearer $S{access_token}`,
+          })
+          .expectStatus(204);
+      });
     });
-    describe('DELETE /todos', () => {
-      it.todo('should delete all todo');
 
-      it.todo('should get empty todo list');
+    describe('DELETE /todos', () => {
+      it('should delete all todos of user', () => {
+        return pactum
+          .spec()
+          .delete('/todos')
+          .withHeaders({
+            Authorization: `Bearer $S{access_token}`,
+          })
+          .expectStatus(204);
+      });
+
+      it('should return empty todos', () => {
+        return pactum
+          .spec()
+          .get('/todos')
+          .withHeaders({
+            Authorization: `Bearer $S{access_token}`,
+          })
+          .expectStatus(200)
+          .expectBody([]);
+      });
     });
   });
 });
