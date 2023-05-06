@@ -121,7 +121,7 @@ describe('App e2e', () => {
       });
     });
 
-    describe('POST logout', () => {
+    describe('POST /auth/logout', () => {
       it('should delete hashed refresh token', () => {
         return pactum
           .spec()
