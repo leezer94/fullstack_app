@@ -3,7 +3,7 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { ConfigService } from '@nestjs/config';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
-import { SECRET_KEY } from 'src/constants';
+import { SECRET_KEY } from '../../constants';
 
 @Injectable()
 export class AtStrategy extends PassportStrategy(Strategy, 'jwt') {

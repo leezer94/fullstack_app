@@ -9,7 +9,7 @@ import {
 import { AuthService } from './auth.service';
 import { AuthDto } from './dto';
 import { RtGuard } from './guard';
-import { GetUser, Public } from 'src/auth/decorator';
+import { GetUser, Public } from '../auth/decorator';
 
 //  this does the job for '/auth/'
 @Controller('auth')
@@ -49,7 +49,6 @@ export class AuthController {
     @GetUser('sub') userId: number,
     @GetUser('refreshToken') refreshToken: string,
   ) {
-    console.log(userId, refreshToken);
     return this.authService.refreshTokens({
       userId,
       refreshToken,
