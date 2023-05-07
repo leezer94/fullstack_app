@@ -7,6 +7,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { TodoModule } from './todo/todo.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtGuard } from './auth/guard/jwt.guard';
+import { OauthModule } from './oauth/oauth.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { JwtGuard } from './auth/guard/jwt.guard';
     BookmarkModule,
     PrismaModule,
     TodoModule,
+    OauthModule,
   ],
   providers: [
     {
