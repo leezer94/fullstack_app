@@ -24,42 +24,46 @@ model User {
 }
 
 model Bookmark {
-  id          Int      @id @default(autoincrement())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
   title       String
   description String?
   link        String
   userId      Int
-  user        User     @relation(fields: [userId], references: [id])
+  user        User      @relation(fields: [userId], references: [id])
 
   @@map("bookmarks")
 }
 
 model Todo {
-  id          Int      @id @default(autoincrement())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  title       String
-  description String?
-  status      String
-  userId      Int
-  user        User     @relation(fields: [userId], references: [id])
-
-  @@map("todos")
-}
-
-
-model PrivateRoom {
-  roomId      Int       @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   title       String
   description String?
-  participants Int[]
-
+  status      String
   userId      Int
+  roomId      Int
+
   user        User      @relation(fields: [userId], references: [id])
+  privateRoom PrivateRoom @relation(fields : [roomId], references : [id])
+
+  @@map("todos")
+}
+
+model PrivateRoom {
+  id            Int       @id @default(autoincrement())
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  title         String
+  description   String?
+  participants  Json[]
+  todos         Todo[]
+  ownerId      Int
+
+
+  user        User      @relation(fields: [ownerId], references: [id])
 
   @@map("privateroom")
 }

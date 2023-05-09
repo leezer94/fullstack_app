@@ -34,8 +34,22 @@ CREATE TABLE "todos" (
     "description" TEXT,
     "status" TEXT NOT NULL,
     "userId" INTEGER NOT NULL,
+    "roomId" INTEGER NOT NULL,
 
     CONSTRAINT "todos_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "privateroom" (
+    "id" SERIAL NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "title" TEXT NOT NULL,
+    "description" TEXT,
+    "participants" JSONB[],
+    "ownerId" INTEGER NOT NULL,
+
+    CONSTRAINT "privateroom_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -46,3 +60,9 @@ ALTER TABLE "bookmarks" ADD CONSTRAINT "bookmarks_userId_fkey" FOREIGN KEY ("use
 
 -- AddForeignKey
 ALTER TABLE "todos" ADD CONSTRAINT "todos_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "todos" ADD CONSTRAINT "todos_roomId_fkey" FOREIGN KEY ("roomId") REFERENCES "privateroom"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "privateroom" ADD CONSTRAINT "privateroom_ownerId_fkey" FOREIGN KEY ("ownerId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
