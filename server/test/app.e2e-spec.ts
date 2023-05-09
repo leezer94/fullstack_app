@@ -37,6 +37,7 @@ describe('App e2e', () => {
 
   afterAll(() => app.close());
 
+  // Auth
   describe('/auth', () => {
     const dto: AuthDto = {
       email: '2kunhee94@gmail.com',
@@ -140,6 +141,14 @@ describe('App e2e', () => {
           .withPathParams('id', '$S{userId}')
           .expectStatus(401);
       });
+    });
+  });
+
+  //OAuth
+  describe('/oauth', () => {
+    describe('Github OAuth', () => {
+      it.todo('should login');
+      it.todo('should logout');
     });
   });
 

@@ -1,7 +1,10 @@
 import axios from 'axios';
 import React, { useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Auth from './Auth';
+import Token from './Token';
 
-function App() {
+function App(): JSX.Element {
   const authLogin = async () => {
     const { data } = await axios.post('http://localhost:8000/auth/signin', {
       email: '2kunhee94@gmail.com',
@@ -25,7 +28,12 @@ function App() {
     return response;
   };
 
-  return <div>Initial Page</div>;
+  return (
+    <Routes>
+      <Route path='/' element={<Auth />} />
+      <Route path='/auth/google-redirect' element={<Token />} />
+    </Routes>
+  );
 }
 
 export default App;
