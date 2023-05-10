@@ -14,6 +14,7 @@ export class CreateTodoDto {
   description?: string;
 
   @IsNumber()
+  @IsNotEmpty()
   roomId: number;
 
   @IsString()

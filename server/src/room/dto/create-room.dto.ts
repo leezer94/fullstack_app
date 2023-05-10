@@ -1,10 +1,4 @@
-import {
-  IsArray,
-  IsNotEmpty,
-  IsNumber,
-  IsOptional,
-  IsString,
-} from 'class-validator';
+import { IsArray, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreateRoomDto {
   @IsString()
@@ -16,7 +10,6 @@ export class CreateRoomDto {
   description?: string;
 
   @IsArray()
-  @IsNumber()
   @IsOptional()
-  participants?: number[];
+  participants?: object[];
 }

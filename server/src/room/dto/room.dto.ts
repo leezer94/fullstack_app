@@ -23,4 +23,6 @@ export class RoomDto {
   @IsNumber()
   @IsOptional()
   participants?: number[];
+
+  todo: object[];
 }
