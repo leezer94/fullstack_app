@@ -8,17 +8,18 @@ datasource db {
 }
 
 model User {
-  id         Int        @id @default(autoincrement())
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
-  email      String     @unique
-  hash       String
-  hashedRT   String?
-  firstName  String?
-  lastName   String?
-  bookmarks  Bookmark[]
-  todos      Todo[]
-  privateRoom PrivateRoom[]
+  id           Int           @id @default(autoincrement())
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  email        String        @unique
+  hash         String
+  hashedRT     String?
+  firstName    String?
+  lastName     String?
+  profileImage String?
+  bookmarks    Bookmark[]
+  todos        Todo[]
+  privateRoom  PrivateRoom[]
 
   @@map("users")
 }
@@ -44,22 +45,24 @@ model Todo {
   description String?
   status      String
   userId      Int
-  user        User     @relation(fields: [userId], references: [id])
+  roomId      Int
+
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  privateRoom PrivateRoom @relation(fields: [roomId], references: [id], onDelete: Cascade)
 
   @@map("todos")
 }
 
-
 model PrivateRoom {
-  roomId      Int       @id @default(autoincrement())
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  title       String
-  description String?
-  participants Int[]
-
-  userId      Int
-  user        User      @relation(fields: [userId], references: [id])
+  id           Int      @id @default(autoincrement())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  title        String
+  description  String?
+  ownerId      Int
+  todos        Todo[]
+  participants Json[]
+  user         User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
 
   @@map("privateroom")
 }

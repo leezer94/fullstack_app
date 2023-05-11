@@ -8,6 +8,7 @@ import { TodoModule } from './todo/todo.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtGuard } from './auth/guard/jwt.guard';
 import { OauthModule } from './oauth/oauth.module';
+import { RoomModule } from './room/room.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { OauthModule } from './oauth/oauth.module';
     PrismaModule,
     TodoModule,
     OauthModule,
+    RoomModule,
   ],
   providers: [
     {

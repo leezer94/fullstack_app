@@ -7,7 +7,8 @@ export class UserService {
   constructor(private prisma: PrismaService) {}
 
   async getUsers() {
-    return this.prisma.user.findMany();
+    console.log('users', await this.prisma.user.findMany());
+    return await this.prisma.user.findMany();
   }
 
   async editUser(userId: number, dto: EditUserDto) {

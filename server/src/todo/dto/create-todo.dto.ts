@@ -13,6 +13,10 @@ export class CreateTodoDto {
   @IsOptional()
   description?: string;
 
+  @IsNumber()
+  @IsNotEmpty()
+  roomId: number;
+
   @IsString()
   @IsOptional()
   status?: 'NOT_STARTED' | 'IN_PROGRESS' | 'COMPLETED';
