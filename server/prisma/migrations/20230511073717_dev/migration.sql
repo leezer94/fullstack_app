@@ -8,6 +8,7 @@ CREATE TABLE "users" (
     "hashedRT" TEXT,
     "firstName" TEXT,
     "lastName" TEXT,
+    "profileImage" TEXT,
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
 );
@@ -46,8 +47,8 @@ CREATE TABLE "privateroom" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "title" TEXT NOT NULL,
     "description" TEXT,
-    "participants" JSONB[],
     "ownerId" INTEGER NOT NULL,
+    "participants" JSONB[],
 
     CONSTRAINT "privateroom_pkey" PRIMARY KEY ("id")
 );
@@ -59,10 +60,10 @@ CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 ALTER TABLE "bookmarks" ADD CONSTRAINT "bookmarks_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "todos" ADD CONSTRAINT "todos_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "todos" ADD CONSTRAINT "todos_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "todos" ADD CONSTRAINT "todos_roomId_fkey" FOREIGN KEY ("roomId") REFERENCES "privateroom"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "todos" ADD CONSTRAINT "todos_roomId_fkey" FOREIGN KEY ("roomId") REFERENCES "privateroom"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "privateroom" ADD CONSTRAINT "privateroom_ownerId_fkey" FOREIGN KEY ("ownerId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "privateroom" ADD CONSTRAINT "privateroom_ownerId_fkey" FOREIGN KEY ("ownerId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;

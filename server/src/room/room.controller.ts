@@ -12,14 +12,15 @@ import { GetUser } from 'src/auth/decorator';
 import { CreateRoomDto } from 'src/room/dto';
 import { RoomService } from './room.service';
 import { User } from '@prisma/client';
+import { EditRoomDto } from './dto/edit-room.dto';
 
 @Controller('room')
 export class RoomController {
   constructor(private roomService: RoomService) {}
 
   @Get()
-  getPrivateRooms() {
-    return this.roomService.getPrivateRooms();
+  getAllPrivateRooms() {
+    return this.roomService.getAllPrivateRooms();
   }
 
   @Get(':id')
@@ -32,6 +33,20 @@ export class RoomController {
     return this.roomService.getTodosByRoomId(roomId);
   }
 
+  @Get('participants/:id')
+  getParticipantsByRoomId(@Param('id', ParseIntPipe) roomId: number) {
+    return this.roomService.getParticipantsByRoomId(roomId);
+  }
+
+  @Patch(':id')
+  modifyPrivateRoom(
+    @GetUser() user: User,
+    @Param('id', ParseIntPipe) roomId: number,
+    @Body() dto: EditRoomDto,
+  ) {
+    return this.roomService.modifyPrivateRoom({ user, roomId, dto });
+  }
+
   @Patch('/join/:id')
   joinPrivateRoom(
     @GetUser() user: User,
@@ -39,6 +54,7 @@ export class RoomController {
   ) {
     return this.roomService.joinPrivateRoom({ user, roomId });
   }
+
   @Post()
   createPrivateRoom(@GetUser() user: User, @Body() dto: CreateRoomDto) {
     return this.roomService.createPrivateRoom({ user, dto });

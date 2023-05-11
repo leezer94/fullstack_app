@@ -7,7 +7,7 @@ import { CreateRoomDto, EditRoomDto } from './dto';
 export class RoomService {
   constructor(private prisma: PrismaService) {}
 
-  async getPrivateRooms() {
+  async getAllPrivateRooms() {
     return await this.prisma.privateRoom.findMany({
       include: { todos: true },
     });
@@ -21,27 +21,49 @@ export class RoomService {
     });
   }
 
-  async getTodosByRoomId(roomId: number) {
-    return this.prisma.privateRoom.findMany({
+  async getParticipantsByRoomId(roomId: number) {
+    const privateRoom = await this.prisma.privateRoom.findUnique({
       where: {
         id: roomId,
       },
     });
+
+    if (!privateRoom)
+      throw new ForbiddenException('Private room does not exist');
+
+    return privateRoom.participants;
+  }
+
+  async getTodosByRoomId(roomId: number) {
+    const privateRoom = await this.prisma.privateRoom.findUnique({
+      where: {
+        id: roomId,
+      },
+      include: { todos: true },
+    });
+
+    if (!privateRoom)
+      throw new ForbiddenException('Private room does not exist');
+
+    return privateRoom.todos;
   }
 
   async joinPrivateRoom({ user, roomId }: { user: User; roomId: number }) {
-    const currentParticipants = await this.prisma.privateRoom.findUnique({
+    const privateRoom = await this.prisma.privateRoom.findUnique({
       where: { id: roomId },
     });
 
-    const userAlreadyExist = currentParticipants.participants.find(
+    const userAlreadyExist = privateRoom.participants.find(
       (participant) => participant['id'] === user.id,
     );
 
     if (userAlreadyExist)
       throw new ForbiddenException('User already exist in the list');
 
-    const newParticipants = [...currentParticipants.participants, user];
+    if (!privateRoom)
+      throw new ForbiddenException('Private room does not exist');
+
+    const newParticipants = [...privateRoom.participants, user];
 
     return await this.prisma.privateRoom.update({
       where: {
@@ -63,8 +85,30 @@ export class RoomService {
     });
   }
 
-  async modifyPrivateRoom({ user, dto }: { user: User; dto: EditRoomDto }) {
-    return this.prisma;
+  async modifyPrivateRoom({
+    user,
+    roomId,
+    dto,
+  }: {
+    user: User;
+    roomId: number;
+    dto: EditRoomDto;
+  }) {
+    const privateRoom = await this.prisma.privateRoom.findUnique({
+      where: { id: roomId },
+    });
+
+    if (!privateRoom || user.id !== privateRoom.ownerId)
+      throw new ForbiddenException('Access to resource denied');
+
+    return await this.prisma.privateRoom.update({
+      where: {
+        id: roomId,
+      },
+      data: {
+        ...dto,
+      },
+    });
   }
 
   async deletePrivateRoom({ user, roomId }: { user: User; roomId: number }) {
@@ -74,7 +118,6 @@ export class RoomService {
       },
     });
 
-    console.log(privateRoom.ownerId === user.id);
     if (!privateRoom || user.id !== privateRoom.ownerId)
       throw new ForbiddenException('Access to resource denied');
 
