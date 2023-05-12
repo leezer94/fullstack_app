@@ -11,7 +11,6 @@ export interface GithubOauthTypes {
 @Injectable()
 export class OauthService {
   googleLogin(req) {
-    console.log('req', req);
     if (!req.user) {
       return 'No user from google';
     }

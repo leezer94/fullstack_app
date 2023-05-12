@@ -11,8 +11,6 @@ export class OauthController {
   @Get()
   @UseGuards(GoogleOAuthGuard)
   async googleAuth(@Req() req) {
-    console.log('req', req);
-
     return;
   }
 
