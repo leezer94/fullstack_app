@@ -2,8 +2,8 @@ import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class CreateTodoDto {
   @IsNumber()
-  @IsNotEmpty()
-  id: number;
+  @IsOptional()
+  id?: number;
 
   @IsString()
   @IsNotEmpty()
@@ -13,7 +13,11 @@ export class CreateTodoDto {
   @IsOptional()
   description?: string;
 
-  @IsString()
+  @IsNumber()
   @IsNotEmpty()
-  status: 'NOT_STARTED' | 'IN PROGRESS' | 'COMPLETED';
+  roomId: number;
+
+  @IsString()
+  @IsOptional()
+  status?: 'NOT_STARTED' | 'IN_PROGRESS' | 'COMPLETED';
 }

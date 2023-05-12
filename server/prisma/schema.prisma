@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,51 +8,61 @@ datasource db {
 }
 
 model User {
-  id Int @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  email String @unique
-  hash String
-
-  firstName String?
-  lastName String?
-  bookmarks Bookmark[]
-  todos Todo[]
-  // with this code above now one user can have many bookmarks
-
+  id           Int           @id @default(autoincrement())
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  email        String        @unique
+  hash         String
+  hashedRT     String?
+  firstName    String?
+  lastName     String?
+  profileImage String?
+  bookmarks    Bookmark[]
+  todos        Todo[]
+  privateRoom  PrivateRoom[]
 
   @@map("users")
 }
 
-model Bookmark{
-  id Int @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  title String
+model Bookmark {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  title       String
   description String?
-  link String
+  link        String
+  userId      Int
+  user        User     @relation(fields: [userId], references: [id])
 
-
-  // with this code below now one user can have many bookmarks
-  userId Int
-  user User @relation(fields: [userId], references: [id])
   @@map("bookmarks")
-
 }
 
-
-model Todo{
-  id Int @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  title String
+model Todo {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  title       String
   description String?
-  status String
+  status      String
+  userId      Int
+  roomId      Int
 
-  userId Int
-  user User @relation(fields: [userId], references: [id])
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  privateRoom PrivateRoom @relation(fields: [roomId], references: [id], onDelete: Cascade)
+
   @@map("todos")
+}
+
+model PrivateRoom {
+  id           Int      @id @default(autoincrement())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  title        String
+  description  String?
+  ownerId      Int
+  todos        Todo[]
+  participants Json[]
+  user         User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+
+  @@map("privateroom")
 }
