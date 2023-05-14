@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import styles from './page.module.css';
-import Avatar from '../components/Avatar/Avatar';
 
 export default function Home() {
   return (
