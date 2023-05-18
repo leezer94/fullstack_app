@@ -1,7 +1,55 @@
 {
   "extends": [
     "next/core-web-vitals",
+    "eslint:recommended",
     "plugin:storybook/recommended",
-    "plugin:@tanstack/eslint-plugin-query/recommended"
-  ]
+    "plugin:@tanstack/eslint-plugin-query/recommended",
+    "plugin:import/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings"
+  ],
+  "rules": {
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          "type",
+          "builtin",
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index",
+          "unknown"
+        ],
+        "pathGroups": [
+          {
+            "pattern": "react*",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "@hooks/*",
+            "group": "internal",
+            "position": "after"
+          },
+          {
+            "pattern": "@pages/*",
+            "group": "internal",
+            "position": "after"
+          },
+          {
+            "pattern": "@components/*",
+            "group": "internal",
+            "position": "after"
+          }
+        ],
+
+        "pathGroupsExcludedImportTypes": ["@tanstack*"],
+        "alphabetize": {
+          "order": "asc"
+        }
+      }
+    ]
+  }
 }
