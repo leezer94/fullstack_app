@@ -6,15 +6,16 @@ import { useRouter } from 'next/navigation';
 import { SignInModal, SignUpModal } from '@/components/auth';
 import { Button, TypographyH2, TypographyMuted } from '@/components/ui';
 
-import AuthenticationImage from '../../../../public/Athentication.avif';
+import AuthenticationImage from '../../../../public/authentication.avif';
 
 export default function Page() {
   const router = useRouter();
 
   return (
     <div className='flex h-screen max-h-screen'>
-      <div className='w-full h-full '>
+      <div className='hidden w-full h-full lg:block'>
         <Image
+          priority
           className='max-h-screen'
           src={AuthenticationImage}
           alt='authentication'
@@ -22,9 +23,9 @@ export default function Page() {
       </div>
       <div className='w-full flex justify-center items-center'>
         <div className='absolute top-4 px-5 w-2/4'>
-          <div className='flex justify-between'>
+          <div className='flex justify-center lg:justify-between'>
             <Button variant='ghost' size='sm' onClick={() => router.back()}>
-              Home
+              Dashboard
             </Button>
           </div>
         </div>

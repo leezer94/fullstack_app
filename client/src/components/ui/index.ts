@@ -6,3 +6,6 @@ export * from './typography';
 export * from './separator';
 export * from './dialog';
 export * from './label';
+export * from './card';
+export * from './select';
+export * from './carousel';
