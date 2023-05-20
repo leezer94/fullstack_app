@@ -9,6 +9,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { JwtGuard } from './auth/guard/jwt.guard';
 import { OauthModule } from './oauth/oauth.module';
 import { RoomModule } from './room/room.module';
+import { RssModule } from './rss/rss.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { RoomModule } from './room/room.module';
     TodoModule,
     OauthModule,
     RoomModule,
+    RssModule,
   ],
   providers: [
     {
