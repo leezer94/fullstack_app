@@ -1,4 +1,5 @@
-import axios, { AxiosRequestHeaders, HeadersDefaults } from 'axios';
+import type { AxiosRequestHeaders, HeadersDefaults } from 'axios';
+import axios from 'axios';
 
 const axiosClient = axios.create();
 

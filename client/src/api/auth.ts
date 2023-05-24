@@ -12,11 +12,6 @@ export const postLogin = async ({
   password,
 }: SignInType): Promise<Pick<AuthType, 'access_token' | 'refresh_token'>> => {
   const { data } = await axiosClient.post('/auth/signin', { email, password });
-  const { access_token } = data;
-
-  console.log(data);
-
-  localStorage.setItem('access_token', access_token);
 
   return data;
 };
@@ -34,7 +29,11 @@ export const postSignUp = async ({
     lastName,
   });
 
-  console.log(data);
+  return data;
+};
+
+export const getSession = async () => {
+  const { data } = await axiosClient.get('/users/me');
 
   return data;
 };

@@ -18,6 +18,9 @@ export default function UserStatus({ className }: { className?: string }) {
       <CardHeader>
         <div className='flex justify-between'>
           <CardTitle>User</CardTitle>
+          <Button variant='outline' size='sm'>
+            Details
+          </Button>
           <Button
             variant='outline'
             size='sm'

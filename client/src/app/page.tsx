@@ -1,18 +1,18 @@
 import {
   GossipCard,
   GithubTrends,
-  Bookmarks,
+  FeArticles,
   GoodsCard,
   TodosCard,
   UserStatus,
 } from '@/components/dashboard';
 
-export default function Home() {
+export default async function Home() {
   return (
     <div className='p-10 w-full h-full border-2'>
       <div className='flex gap-5 mb-5'>
         <GossipCard />
-        <Bookmarks />
+        <FeArticles />
         <UserStatus />
       </div>
       <div className='flex gap-5 '>
