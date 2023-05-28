@@ -12,10 +12,19 @@ import {
 import * as LabelPrimitive from '@radix-ui/react-label';
 import { Slot } from '@radix-ui/react-slot';
 
+import { Input } from '@/components/ui';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
 
 const Form = FormProvider;
+
+interface ItemFieldProps {
+  field: any;
+  label: string;
+  placeholder: string;
+  description?: string;
+  type?: string;
+}
 
 type FormFieldContextValue<
   TFieldValues extends FieldValues = FieldValues,
@@ -167,6 +176,27 @@ const FormMessage = React.forwardRef<
 });
 FormMessage.displayName = 'FormMessage';
 
+const ItemField = ({
+  field,
+  label,
+  placeholder,
+  description,
+  type,
+}: ItemFieldProps) => {
+  return (
+    <FormItem>
+      <FormLabel>{label}</FormLabel>
+      <FormControl>
+        <Input type={type} placeholder={placeholder} {...field} />
+      </FormControl>
+      <FormDescription className='items-end'>{description}</FormDescription>
+      <FormMessage />
+    </FormItem>
+  );
+};
+
+ItemField.displayName = 'ItemField';
+
 export {
   useFormField,
   Form,
@@ -176,4 +206,5 @@ export {
   FormDescription,
   FormMessage,
   FormField,
+  ItemField,
 };

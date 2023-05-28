@@ -7,7 +7,7 @@ import {
   DialogDescription,
   DialogHeader,
 } from '@/components/ui';
-import { Content } from './features';
+import { SigninForm } from './features';
 
 export default function SignInModal({ button }: { button: ReactNode }) {
   return (
@@ -18,8 +18,18 @@ export default function SignInModal({ button }: { button: ReactNode }) {
           <DialogTitle>Sign In</DialogTitle>
           <DialogDescription>Sign In With Your Account</DialogDescription>
         </DialogHeader>
-        <Content />
+        <SigninForm />
       </DialogContent>
+      {/* <DialogFooter>
+        <DialogTrigger asChild>
+          <Button
+            type='submit'
+            // onClick={() => handleSignIn({ email, password })}
+          >
+            Sign In
+          </Button>
+        </DialogTrigger>
+      </DialogFooter> */}
     </Dialog>
   );
 }

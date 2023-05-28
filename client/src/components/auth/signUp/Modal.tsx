@@ -8,8 +8,10 @@ import {
   DialogTrigger,
   DialogDescription,
   DialogHeader,
+  TypographyH4,
+  Button,
 } from '@/components/ui';
-import { Content } from './features';
+import { SignupForm } from './features';
 
 export default function SignUpModal({ button }: { button: ReactNode }) {
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
@@ -28,7 +30,20 @@ export default function SignUpModal({ button }: { button: ReactNode }) {
               : 'Complete your profile here to create a new account with us.'}
           </DialogDescription>
         </DialogHeader>
-        <Content isSubmitted={isSubmitted} setIsSubmitted={setIsSubmitted} />
+        <div className='grid gap-4 py-4'>
+          {isSubmitted ? (
+            <div className='flex flex-col items-center gap-10'>
+              <div className='flex '>
+                <TypographyH4>Please Sign in with your account</TypographyH4>
+              </div>
+              <DialogTrigger>
+                <Button>Confirm</Button>
+              </DialogTrigger>
+            </div>
+          ) : (
+            <SignupForm setIsSubmitted={setIsSubmitted} />
+          )}
+        </div>
       </DialogContent>
     </Dialog>
   );

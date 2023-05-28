@@ -6,11 +6,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { postSignUp } from '@/api';
 import { Button } from '@/components/ui';
-import { Form, FormField } from '@/components/ui/form';
+import { Form, FormField, ItemField } from '@/components/ui/form';
 import { useCustomMutation } from '@/lib/hooks/query';
 import { toast } from '@/lib/hooks/toast';
 import { UserInformationType } from '@/types';
-import ItemField from './FormItem';
 
 export const FormSchema = z
   .object({

@@ -7,7 +7,7 @@ type SignUpType = SignInType & {
   lastName: string;
 };
 
-export const postLogin = async ({
+export const postSignin = async ({
   email,
   password,
 }: SignInType): Promise<Pick<AuthType, 'access_token' | 'refresh_token'>> => {
