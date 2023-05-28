@@ -8,6 +8,7 @@ import * as argon from 'argon2';
 import { SECRET_KEY } from '../constants/keys';
 import { EXPIRATION_TIME } from '../constants/expirations';
 import { ERROR_MESSAGE } from '../constants/errorMessages';
+import { Response } from 'express';
 
 @Injectable()
 export class AuthService {
@@ -26,6 +27,8 @@ export class AuthService {
       return await this.prisma.user.create({
         data: {
           email: dto.email,
+          firstName: dto.firstName,
+          lastName: dto.lastName,
           hash,
         },
       });
@@ -40,7 +43,7 @@ export class AuthService {
     throw Error;
   }
 
-  async signin(dto: AuthDto) {
+  async signin(dto: AuthDto, res: Response) {
     // find user by email
     const user = await this.prisma.user.findUnique({
       where: {
@@ -60,6 +63,11 @@ export class AuthService {
     // send back the user
 
     const tokens = await this.signTokens(user.id, user.email);
+
+    res.cookie('refresh_token', tokens.refresh_token, {
+      httpOnly: true,
+      maxAge: EXPIRATION_TIME.REFRESH_TOKEN,
+    });
 
     await this.updateRefreshTokenHash(user.id, tokens.refresh_token);
 
