@@ -11,7 +11,10 @@ export const postLogin = async ({
   email,
   password,
 }: SignInType): Promise<Pick<AuthType, 'access_token' | 'refresh_token'>> => {
-  const { data } = await axiosClient.post('/auth/signin', { email, password });
+  const { data } = await axiosClient.post('/auth/signin', {
+    email,
+    password,
+  });
 
   return data;
 };

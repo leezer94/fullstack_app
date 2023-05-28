@@ -16,8 +16,6 @@ import {
 import { sanitizeDescription } from '@/lib';
 import { Feed } from '@/types';
 
-buttonVariants;
-
 type ModalProps = {
   type: 'FeArticles' | 'Gossip';
   button: ReactNode;
@@ -49,7 +47,11 @@ export default function FeedModal({
         <DialogFooter className='mt-10'>
           <div className='flex flex-row justify-between items-center w-full'>
             <TypographyMuted>{pubDate}</TypographyMuted>
-            <Link href={link} className={buttonVariants({ size: 'sm' })}>
+            <Link
+              target='_blank'
+              href={link}
+              className={buttonVariants({ size: 'sm' })}
+            >
               <LinkIcon className='mr-2 h-4 w-4' />
               Link to Feed
             </Link>
