@@ -14,6 +14,7 @@ import {
   buttonVariants,
 } from '@/components/ui';
 import { sanitizeDescription } from '@/lib';
+import { useParsedFeed } from '@/lib/hooks/feed';
 import { Feed } from '@/types';
 
 type ModalProps = {
@@ -27,10 +28,7 @@ export default function FeedModal({
   button,
   feed: { title, description, link, pubDate },
 }: ModalProps) {
-  const decodedDescription = new DOMParser().parseFromString(
-    description,
-    'text/html'
-  ).body.textContent as string;
+  const { parsedFeed } = useParsedFeed(description);
 
   return (
     <Dialog>
@@ -40,9 +38,7 @@ export default function FeedModal({
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
         <TypographyP>
-          {type === 'Gossip'
-            ? description
-            : sanitizeDescription(decodedDescription)}
+          {type === 'Gossip' ? description : sanitizeDescription(parsedFeed)}
         </TypographyP>
         <DialogFooter className='mt-10'>
           <div className='flex flex-row justify-between items-center w-full'>

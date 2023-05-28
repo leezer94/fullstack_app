@@ -11,7 +11,9 @@ export default function Home() {
   return (
     <div className='p-10 w-full h-full border-2'>
       <div className='flex gap-5 mb-5'>
+        {/* @ts-expect-error Async Server Component */}
         <GossipCard />
+        {/* @ts-expect-error Async Server Component */}
         <FeArticles />
         <UserStatus />
       </div>
