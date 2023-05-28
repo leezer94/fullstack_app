@@ -4,12 +4,14 @@ import {
   HttpCode,
   HttpStatus,
   Post,
+  Res,
   UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthDto } from './dto';
 import { RtGuard } from './guard';
 import { GetUser, Public } from '../auth/decorator';
+import { Response } from 'express';
 
 //  this does the job for '/auth/'
 @Controller('auth')
@@ -30,8 +32,8 @@ export class AuthController {
   @Public()
   @HttpCode(HttpStatus.OK)
   @Post('signin')
-  signin(@Body() dto: AuthDto) {
-    return this.authService.signin(dto);
+  signin(@Body() dto: AuthDto, @Res({ passthrough: true }) res: Response) {
+    return this.authService.signin(dto, res);
   }
 
   // @UseGuards(JwtGuard)

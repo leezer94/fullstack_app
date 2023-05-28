@@ -1,2 +1,3 @@
 export * from './auth';
-export * from './axiosInstance';
+export * from './rssFeed';
+export * from './user';

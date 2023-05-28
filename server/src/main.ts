@@ -6,6 +6,7 @@ async function bootstrap() {
   app.enableCors({
     origin: 'http://localhost:3000',
     preflightContinue: false,
+    credentials: true,
   });
   // const reflector = new Reflector();
   // app.useGlobalGuards(new JwtGuard(reflector)); // auth.module.ts providers

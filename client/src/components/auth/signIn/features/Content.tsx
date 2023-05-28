@@ -18,7 +18,7 @@ export default function Content() {
     }: Pick<AuthType, 'access_token' | 'refresh_token'>) => {
       localStorage.setItem('access_token', access_token);
       router.push('/');
-      toast({ title: '성공' });
+      toast({ title: 'Welcome!', description: 'Success to Login' });
     },
   });
   const [email, setEmail] = useState<string>('');

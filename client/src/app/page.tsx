@@ -1,7 +1,7 @@
 import {
   GossipCard,
   GithubTrends,
-  Bookmarks,
+  FeArticles,
   GoodsCard,
   TodosCard,
   UserStatus,
@@ -12,7 +12,7 @@ export default function Home() {
     <div className='p-10 w-full h-full border-2'>
       <div className='flex gap-5 mb-5'>
         <GossipCard />
-        <Bookmarks />
+        <FeArticles />
         <UserStatus />
       </div>
       <div className='flex gap-5 '>
