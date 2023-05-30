@@ -1,3 +1,5 @@
+import { cn } from '@/lib';
+
 export type Typography = string;
 
 export function TypographyH1({ children }: { children: Typography }) {
@@ -32,8 +34,18 @@ export function TypographyH4({ children }: { children: Typography }) {
   );
 }
 
-export function TypographyP({ children }: { children: Typography }) {
-  return <p className='leading-7 [&:not(:first-child)]:mt-6'>{children}</p>;
+export function TypographyP({
+  children,
+  className,
+}: {
+  children: Typography;
+  className?: string;
+}) {
+  return (
+    <p className={cn('leading-7 [&:not(:first-child)]:mt-6', className)}>
+      {children}
+    </p>
+  );
 }
 
 export function TypographyMuted({ children }: { children: Typography }) {

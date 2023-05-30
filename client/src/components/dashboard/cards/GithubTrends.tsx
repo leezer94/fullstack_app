@@ -1,3 +1,4 @@
+import { Selection } from '@/components/dashboard/cards/features';
 import {
   Button,
   Card,
@@ -6,11 +7,6 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
 } from '@/components/ui';
 
 export default function GithubTrends() {
@@ -19,19 +15,11 @@ export default function GithubTrends() {
       <CardHeader>
         <div className='flex items-center justify-between'>
           <CardTitle>Popular on Github</CardTitle>
-          <div className='flex gap-2'>
-            <Select>
-              <SelectTrigger className='w-[160px]'>
-                <SelectValue placeholder='Language' />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value='javascript'>Javascript</SelectItem>
-                <SelectItem value='go'>Go</SelectItem>
-                <SelectItem value='java'>Java</SelectItem>
-              </SelectContent>
-            </Select>
-            <Button variant='outline'>Search</Button>
-          </div>
+          <Selection
+            placeholder='Language'
+            items={['Javascript', 'Go', 'Java']}
+            button={<Button variant='outline'>Search</Button>}
+          />
         </div>
         <CardDescription>Popular repositories on Github</CardDescription>
       </CardHeader>

@@ -13,3 +13,15 @@ export const getFootballGossip = async (): Promise<RssFeedType> => {
 
   return data;
 };
+
+export const getCssTricksArticles = async (): Promise<RssFeedType> => {
+  const { data } = await axios.get('http://localhost:8000/rss/css-tricks');
+
+  return data;
+};
+
+export const getDevToArticles = async (): Promise<RssFeedType> => {
+  const { data } = await axios.get('http://localhost:8000/rss/dev-to');
+
+  return data;
+};

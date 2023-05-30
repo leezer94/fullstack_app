@@ -1,4 +1,5 @@
 'use client';
+import { Selection } from '@/components/dashboard/cards/features';
 import {
   Button,
   Card,
@@ -7,11 +8,6 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
 } from '@/components/ui';
 
 export default function TodosCard() {
@@ -20,18 +16,11 @@ export default function TodosCard() {
       <CardHeader>
         <div className='flex justify-between'>
           <CardTitle>Todos</CardTitle>
-          <div className='flex gap-2'>
-            <Select>
-              <SelectTrigger className='w-[160px]'>
-                <SelectValue placeholder='SortBy' />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value='priority'>Priority</SelectItem>
-                <SelectItem value='due-date'>Due Date</SelectItem>
-              </SelectContent>
-            </Select>
-            <Button variant='outline'>Open</Button>
-          </div>
+          <Selection
+            placeholder='SortBy'
+            items={['Priority', 'Due Date']}
+            button={<Button variant='outline'>Open</Button>}
+          />
         </div>
         <CardDescription>Your Todos sorted by Priority</CardDescription>
       </CardHeader>

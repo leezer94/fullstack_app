@@ -18,7 +18,7 @@ import { useParsedFeed } from '@/lib/hooks/feed';
 import { Feed } from '@/types';
 
 type ModalProps = {
-  type: 'FeArticles' | 'Gossip';
+  type: 'FeArticles' | 'Gossip' | 'CSS-tricks';
   button: ReactNode;
   feed: Feed;
 };
@@ -37,9 +37,16 @@ export default function FeedModal({
         <DialogHeader className='mb-10'>
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
-        <TypographyP>
-          {type === 'Gossip' ? description : sanitizeDescription(parsedFeed)}
-        </TypographyP>
+        <div className='overflow-hidden'>
+          <TypographyP className='max-h-[300px] overflow-auto'>
+            {type === 'Gossip'
+              ? description
+              : type === 'FeArticles'
+              ? sanitizeDescription(parsedFeed)
+              : parsedFeed}
+          </TypographyP>
+        </div>
+
         <DialogFooter className='mt-10'>
           <div className='flex flex-row justify-between items-center w-full'>
             <TypographyMuted>{pubDate}</TypographyMuted>

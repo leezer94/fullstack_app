@@ -12,8 +12,9 @@ import FeedModal from './features/FeedModal';
 
 export default async function FeArticles() {
   const FeArticleFeed = await getFeArticles();
+
   return (
-    <Card className='w-full hover:border-red-200'>
+    <Card className='w-full'>
       <CardHeader>
         <CardTitle>FE Articles</CardTitle>
         <CardDescription>{FeArticleFeed.description}</CardDescription>

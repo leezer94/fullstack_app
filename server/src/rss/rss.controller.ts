@@ -21,4 +21,20 @@ export class RssController {
 
     return this.rssService.getRssFeed(url);
   }
+
+  @Public()
+  @Get('css-tricks')
+  getCssTricksArticles() {
+    const url = 'https://css-tricks.com/feed/';
+
+    return this.rssService.getRssFeed(url);
+  }
+
+  @Public()
+  @Get('dev-to')
+  getDevToArticles() {
+    const url = 'https://dev.to/feed';
+
+    return this.rssService.getRssFeed(url);
+  }
 }

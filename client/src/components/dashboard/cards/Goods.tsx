@@ -1,84 +1,73 @@
 'use client';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { getCssTricksArticles, getDevToArticles } from '@/api';
+import { FeedModal, Selection } from '@/components/dashboard/cards/features';
 import {
+  Button,
   Card,
   CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
-  Carousel,
-  CarouselImageContainer,
+  Separator,
 } from '@/components/ui';
 
-import Sample1 from '../../../../public/A24/sample1.webp';
-import Sample2 from '../../../../public/A24/sample2.webp';
-import Sample3 from '../../../../public/A24/sample3.webp';
+export default async function GoodsCard() {
+  // needs to be changed here to server component -> client component ?
+  const state: 'article' | 'articledd' = 'article';
 
-const images = [
-  {
-    name: 'sample1',
-    src: Sample1,
-    href: 'https://shop.a24films.com/products/violet-logo-collar',
-  },
-  {
-    name: 'sample2',
-    src: Sample2,
-    href: 'https://shop.a24films.com/products/violet-logo-collar',
-  },
-  {
-    name: 'sample3',
-    src: Sample3,
-    href: 'https://shop.a24films.com/products/violet-logo-collar',
-  },
-  {
-    name: 'sample2',
-    src: Sample2,
-    href: 'https://shop.a24films.com/products/violet-logo-collar',
-  },
-  {
-    name: 'sample1',
-    src: Sample1,
-    href: 'https://shop.a24films.com/products/violet-logo-collar',
-  },
-  {
-    name: 'sample2',
-    src: Sample2,
-    href: 'https://shop.a24films.com/products/violet-logo-collar',
-  },
-  {
-    name: 'sample3',
-    src: Sample3,
-    href: 'https://shop.a24films.com/products/violet-logo-collar',
-  },
-];
+  const [cssTricksArticles, devToArticles] = await Promise.all([
+    getCssTricksArticles(),
+    getDevToArticles(),
+  ]);
 
-export default function GoodsCard() {
-  const router = useRouter();
   return (
     <Card className='flex flex-col w-4/6 min-h-[500px] max-h-[500px]'>
       <CardHeader>
-        <CardTitle>Goods</CardTitle>
+        <div className='flex items-center justify-between'>
+          <CardTitle>Goods</CardTitle>
+          <Selection
+            placeholder='CSS tricks'
+            items={['CSS tricks', 'Dev.to', 'Java']}
+            button={<Button variant='outline'>Get Feeds</Button>}
+          />
+        </div>
         <CardDescription>Products from A24</CardDescription>
       </CardHeader>
-      <CardContent>
-        <Carousel className='h-[300px]'>
-          <CarouselImageContainer>
-            {images.map((image, idx) => (
-              <Image
-                priority
-                key={`sample${idx}`}
-                className='rounded-lg w-[20%] cursor-pointer'
-                src={image.src}
-                alt={image.name}
-                onClick={() => router.push(image.href)}
-              />
+      <CardContent className='overflow-auto'>
+        {state === 'article'
+          ? devToArticles.item.map((feed, idx) => (
+              <div key={feed.link + idx} className='overflow-auto'>
+                <FeedModal
+                  type='CSS-tricks'
+                  button={
+                    <p className='pb-5 pt-5 cursor-pointer hover:text-red-300'>
+                      {feed.title}
+                    </p>
+                  }
+                  feed={feed}
+                />
+                <Separator />
+              </div>
+            ))
+          : cssTricksArticles.item.map((feed, idx) => (
+              <div key={feed.link + idx} className='overflow-auto'>
+                <FeedModal
+                  type='CSS-tricks'
+                  button={
+                    <p className='pb-5 pt-5 cursor-pointer hover:text-red-300'>
+                      {feed.title}
+                    </p>
+                  }
+                  feed={feed}
+                />
+                <Separator />
+              </div>
             ))}
-          </CarouselImageContainer>
-        </Carousel>
       </CardContent>
-      <CardFooter></CardFooter>
+      <CardFooter className='flex justify-center'>
+        <p>...</p>
+      </CardFooter>
     </Card>
   );
 }

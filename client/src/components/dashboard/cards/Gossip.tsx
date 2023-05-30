@@ -19,12 +19,7 @@ export default async function GossipCard({
   const footballFeed = await getFootballGossip();
 
   return (
-    <Card
-      className={cn(
-        'flex flex-col w-3/6 hover:border-red-200 max-h-[500px]',
-        className
-      )}
-    >
+    <Card className={cn('flex flex-col w-3/6 max-h-[500px]', className)}>
       <CardHeader>
         <CardTitle>Today&apos;s Gossip</CardTitle>
         <CardDescription>{footballFeed.title}</CardDescription>
