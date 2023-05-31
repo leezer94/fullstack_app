@@ -10,6 +10,7 @@ import { JwtGuard } from './auth/guard/jwt.guard';
 import { OauthModule } from './oauth/oauth.module';
 import { RoomModule } from './room/room.module';
 import { RssModule } from './rss/rss.module';
+import { GithubModule } from './github/github.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { RssModule } from './rss/rss.module';
     OauthModule,
     RoomModule,
     RssModule,
+    GithubModule,
   ],
   providers: [
     {
