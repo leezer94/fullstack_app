@@ -2,10 +2,11 @@ import {
   GossipCard,
   GithubTrends,
   FeArticles,
-  GoodsCard,
+  ArticlesCard,
   TodosCard,
   UserStatus,
 } from '@/components/dashboard';
+import { CategoryContextProvider } from '../contexts/categoryContext';
 
 export default function Home() {
   return (
@@ -22,7 +23,9 @@ export default function Home() {
           <GithubTrends />
           <TodosCard />
         </div>
-        <GoodsCard />
+        <CategoryContextProvider>
+          <ArticlesCard />
+        </CategoryContextProvider>
       </div>
     </div>
   );

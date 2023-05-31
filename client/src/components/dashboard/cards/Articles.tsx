@@ -2,6 +2,7 @@
 import { useContext } from 'react';
 import {
   CategoryContent,
+  FeedForm,
   Selection,
 } from '@/components/dashboard/cards/features';
 import {
@@ -12,6 +13,8 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
+  Input,
+  Label,
 } from '@/components/ui';
 import { CategoryContext } from '@/contexts';
 
@@ -23,11 +26,14 @@ export default function ArticlesCard() {
       <CardHeader>
         <div className='flex items-center justify-between'>
           <CardTitle>Articles</CardTitle>
-          <Selection
-            placeholder='CSS-tricks'
-            items={['CSS-tricks', 'Dev.to', 'Java']}
-            button={<Button variant='outline'>Get Feeds</Button>}
-          />
+          <div className='flex justify-center gap-5'>
+            <Selection
+              placeholder='CSS-tricks'
+              items={['CSS-tricks', 'Dev.to', 'Java']}
+              button={<Button variant='outline'>Get Feeds</Button>}
+            />
+            {/* <FeedForm /> */}
+          </div>
         </div>
         <CardDescription>Articles from {currentCategory}</CardDescription>
       </CardHeader>

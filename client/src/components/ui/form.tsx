@@ -20,7 +20,7 @@ const Form = FormProvider;
 
 interface ItemFieldProps {
   field: any;
-  label: string;
+  label?: string;
   placeholder: string;
   description?: string;
   type?: string;

@@ -1,16 +1,18 @@
 'use client';
-
 import { GithubIcon, Mail } from 'lucide-react';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { SignInModal, SignUpModal } from '@/components/auth';
-import { Button, TypographyH2, TypographyMuted } from '@/components/ui';
+import {
+  Button,
+  buttonVariants,
+  TypographyH2,
+  TypographyMuted,
+} from '@/components/ui';
 
 import AuthenticationImage from '../../../../public/authentication.avif';
 
 export default function Page() {
-  const router = useRouter();
-
   return (
     <div className='flex h-screen max-h-screen'>
       <div className='hidden w-full h-full lg:block'>
@@ -24,9 +26,12 @@ export default function Page() {
       <div className='w-full flex justify-center items-center'>
         <div className='absolute top-4 px-5 w-2/4'>
           <div className='flex justify-center lg:justify-between'>
-            <Button variant='ghost' size='sm' onClick={() => router.back()}>
+            <Link
+              href='/'
+              className={buttonVariants({ variant: 'ghost', size: 'sm' })}
+            >
               Dashboard
-            </Button>
+            </Link>
           </div>
         </div>
         <div className='flex flex-col justify-center w-3/6'>

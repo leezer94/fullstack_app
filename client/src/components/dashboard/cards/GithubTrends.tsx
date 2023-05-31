@@ -14,7 +14,7 @@ export default function GithubTrends() {
     <Card className='w-full max-h-[300px]'>
       <CardHeader>
         <div className='flex items-center justify-between'>
-          <CardTitle>Popular on Github</CardTitle>
+          <CardTitle>Trending on Github</CardTitle>
           <Selection
             placeholder='Language'
             items={['Javascript', 'Go', 'Java']}

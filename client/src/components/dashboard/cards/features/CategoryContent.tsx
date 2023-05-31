@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect } from 'react';
 import { getCssTricksArticles, getDevToArticles } from '@/api';
 import FeedModal from '@/components/dashboard/cards/features/FeedModal';
 import { Separator } from '@/components/ui';
@@ -20,10 +19,6 @@ export default function CategoryContent({
     ['dev.to-articles'],
     getDevToArticles
   );
-
-  useEffect(() => {
-    console.log(currentCategory);
-  }, [currentCategory]);
 
   return (
     <>

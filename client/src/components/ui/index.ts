@@ -9,3 +9,4 @@ export * from './label';
 export * from './card';
 export * from './select';
 export * from './carousel';
+export * from './tabs';

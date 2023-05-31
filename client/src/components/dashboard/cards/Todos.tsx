@@ -1,14 +1,20 @@
 'use client';
+
 import { Selection } from '@/components/dashboard/cards/features';
 import {
-  Button,
+  buttonVariants,
   Card,
   CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
 } from '@/components/ui';
+import Link from 'next/link';
 
 export default function TodosCard() {
   return (
@@ -19,25 +25,19 @@ export default function TodosCard() {
           <Selection
             placeholder='SortBy'
             items={['Priority', 'Due Date']}
-            button={<Button variant='outline'>Open</Button>}
+            button={
+              <Link
+                href='/todos'
+                className={buttonVariants({ variant: 'outline' })}
+              >
+                Open
+              </Link>
+            }
           />
         </div>
         <CardDescription>Your Todos sorted by Priority</CardDescription>
       </CardHeader>
-      <CardContent>
-        <div>dd</div>
-        <div>dd</div>
-        <div>dd</div>
-        <div>dd</div>
-        <div>dd</div>
-        <div>dd</div>
-        <div>dd</div>
-        <div>dd</div>
-        <div>dd</div>
-        <div>dd</div>
-        <div>dd</div>
-        <div>dd</div>
-      </CardContent>
+      <CardContent></CardContent>
       <CardFooter></CardFooter>
     </Card>
   );

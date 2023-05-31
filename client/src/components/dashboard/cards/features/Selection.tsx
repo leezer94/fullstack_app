@@ -13,7 +13,7 @@ import { SetCategoryContext } from '@/contexts';
 interface Props {
   placeholder: string;
   items: string[];
-  button: ReactNode;
+  button?: ReactNode;
 }
 
 export default function Selection({ placeholder, items, button }: Props) {
