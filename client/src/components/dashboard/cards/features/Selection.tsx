@@ -1,4 +1,6 @@
-import { ReactNode } from 'react';
+'use client';
+
+import { ReactNode, useContext } from 'react';
 import {
   Select,
   SelectContent,
@@ -6,6 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui';
+import { SetCategoryContext } from '@/contexts';
 
 interface Props {
   placeholder: string;
@@ -14,9 +17,15 @@ interface Props {
 }
 
 export default function Selection({ placeholder, items, button }: Props) {
+  const setCurrentCategory = useContext(SetCategoryContext);
+
   return (
     <div className='flex gap-2'>
-      <Select>
+      <Select
+        onValueChange={(value) =>
+          setCurrentCategory !== null && setCurrentCategory(value)
+        }
+      >
         <SelectTrigger className='w-[160px]'>
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>

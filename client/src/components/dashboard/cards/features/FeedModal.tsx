@@ -18,7 +18,7 @@ import { useParsedFeed } from '@/lib/hooks/feed';
 import { Feed } from '@/types';
 
 type ModalProps = {
-  type: 'FeArticles' | 'Gossip' | 'CSS-tricks';
+  type: 'FeArticles' | 'Gossip' | 'CSS-tricks' | 'Dev.to';
   button: ReactNode;
   feed: Feed;
 };
