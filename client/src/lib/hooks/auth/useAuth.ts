@@ -1,6 +1,6 @@
 import type { AuthType, UserInformationType } from '@/types';
 import { useRouter } from 'next/navigation';
-import { postLogin, postSignUp } from '@/api';
+import { postLogout, postSignin, postSignUp } from '@/api';
 import { useCustomMutation } from '@/lib/hooks/query';
 import { useToast } from '../toast';
 
@@ -8,7 +8,7 @@ export const useAuth = () => {
   const { toast } = useToast();
   const router = useRouter();
   const { mutate: handleSignIn, error: signinError } = useCustomMutation(
-    postLogin,
+    postSignin,
     {
       onSuccess: ({
         access_token,
@@ -29,5 +29,24 @@ export const useAuth = () => {
     }
   );
 
-  return { handleSignIn, signinError, handleSignUp, signupError };
+  const { mutate: handleLogout, error: logoutError } = useCustomMutation(
+    postLogout,
+    {
+      onSuccess: () => {
+        localStorage.removeItem('access_token');
+        toast({
+          title: 'Succeed to Sign out',
+          description: 'See you again',
+        });
+      },
+    }
+  );
+  return {
+    handleSignIn,
+    signinError,
+    handleSignUp,
+    signupError,
+    handleLogout,
+    logoutError,
+  };
 };

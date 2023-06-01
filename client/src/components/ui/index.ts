@@ -10,3 +10,8 @@ export * from './card';
 export * from './select';
 export * from './carousel';
 export * from './tabs';
+export * from './avatar';
+export * from './hover-card';
+export * from './hover-avatar';
+export * from './dropdown-menu';
+export * from './dropdown-avatar';

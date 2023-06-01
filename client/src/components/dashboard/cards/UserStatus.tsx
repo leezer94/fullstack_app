@@ -2,24 +2,31 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { UserTabs } from '@/components/dashboard/cards/features';
 import {
-  Button,
+  ButtonLoading,
   buttonVariants,
   Card,
-  CardDescription,
+  CardContent,
   CardHeader,
   CardTitle,
+  DropDownAvatar,
 } from '@/components/ui';
 import { cn } from '@/lib/utils';
 
 export default function UserStatus({ className }: { className?: string }) {
   const [token, setToken] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
+    setIsLoading(true);
     const access_token = localStorage.getItem('access_token');
 
-    setToken(access_token);
-  }, [token]);
+    if (access_token) {
+      setIsLoading(false);
+      setToken(access_token);
+    }
+  }, [token, isLoading]);
 
   return (
     <Card className={cn('w-3/6', className)}>
@@ -27,21 +34,24 @@ export default function UserStatus({ className }: { className?: string }) {
         <div className='flex justify-between'>
           <CardTitle>User</CardTitle>
           {token ? (
-            <div>
-              <Button variant='outline' size='sm'>
-                Details
-              </Button>
-            </div>
-          ) : (
+            <DropDownAvatar
+              avatarLink='https://github.com/leezer94.png'
+              userName='Leezer'
+            />
+          ) : isLoading ? (
             <Link
               className={buttonVariants({ variant: 'outline', size: 'sm' })}
               href='/login'
             >
               Sign In
             </Link>
+          ) : (
+            <ButtonLoading />
           )}
         </div>
-        <CardDescription>Your status</CardDescription>
+        <CardContent>
+          <UserTabs />
+        </CardContent>
       </CardHeader>
     </Card>
   );

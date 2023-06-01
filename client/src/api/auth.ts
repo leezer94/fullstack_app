@@ -1,4 +1,5 @@
 import type { AuthType, UserInformationType } from '@/types';
+import axios from 'axios';
 import axiosClient from './axiosInstance';
 
 type SignInType = Pick<AuthType, 'email' | 'password'>;
@@ -35,8 +36,16 @@ export const postSignUp = async ({
   return data;
 };
 
-export const getSession = async () => {
-  const { data } = await axiosClient.get('/users/me');
+export const getSession = async (): Promise<Partial<UserInformationType>> => {
+  const token = localStorage.getItem('access_token');
+  const { data } = await axios.get('http://localhost:8000/users/me', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
   return data;
 };
+
+export const postLogout = async (): Promise<() => void> =>
+  await axiosClient.post('/auth/logout');
