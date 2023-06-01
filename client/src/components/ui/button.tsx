@@ -4,6 +4,7 @@ import * as React from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { VariantProps, cva } from 'class-variance-authority';
 
+import { Loader2 } from 'lucide-react';
 import { cn } from '@/lib';
 
 const buttonVariants = cva(
@@ -55,4 +56,15 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 );
 Button.displayName = 'Button';
 
-export { Button, buttonVariants };
+const ButtonLoading = () => {
+  return (
+    <Button variant='outline' disabled>
+      <Loader2 className='mr-2 h-4 w-4 animate-spin' />
+      Please Wait
+    </Button>
+  );
+};
+
+ButtonLoading.displayName = 'ButtonLoading';
+
+export { Button, ButtonLoading, buttonVariants };

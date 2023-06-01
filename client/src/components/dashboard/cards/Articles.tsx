@@ -1,8 +1,7 @@
 'use client';
-import { useContext } from 'react';
+import { Suspense, useContext } from 'react';
 import {
   CategoryContent,
-  FeedForm,
   Selection,
 } from '@/components/dashboard/cards/features';
 import {
@@ -13,9 +12,8 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-  Input,
-  Label,
 } from '@/components/ui';
+import { ArticlesSkeleton } from '@/components/ui/skeletons';
 import { CategoryContext } from '@/contexts';
 
 export default function ArticlesCard() {
@@ -38,7 +36,9 @@ export default function ArticlesCard() {
         <CardDescription>Articles from {currentCategory}</CardDescription>
       </CardHeader>
       <CardContent className='overflow-auto'>
-        <CategoryContent currentCategory={currentCategory} />
+        <Suspense fallback={<ArticlesSkeleton />}>
+          <CategoryContent currentCategory={currentCategory} />
+        </Suspense>
       </CardContent>
       <CardFooter className='flex justify-center'>
         <p>...</p>

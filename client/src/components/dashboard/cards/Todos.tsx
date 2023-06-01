@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { Selection } from '@/components/dashboard/cards/features';
 import {
   buttonVariants,
@@ -9,12 +10,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
 } from '@/components/ui';
-import Link from 'next/link';
 
 export default function TodosCard() {
   return (

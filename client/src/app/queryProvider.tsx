@@ -10,6 +10,7 @@ export default function QueryProvider({ children }: { children: ReactNode }) {
         defaultOptions: {
           queries: {
             staleTime: 2.5 * (60 * 1000), // 2.5 min
+            suspense: true,
           },
         },
       }),
