@@ -16,7 +16,7 @@ export const useAuth = () => {
         localStorage.setItem('access_token', access_token);
         router.push('/');
       },
-      onSettled: () => toast({ title: '로그인에 성공 하셨습니다.' }),
+      onSettled: () => toast({ title: 'Succeed to Sign In' }),
     }
   );
 
@@ -36,7 +36,7 @@ export const useAuth = () => {
         localStorage.removeItem('access_token');
         toast({
           title: 'Succeed to Sign out',
-          description: 'See you again',
+          description: 'We hope to see you again!',
         });
       },
     }

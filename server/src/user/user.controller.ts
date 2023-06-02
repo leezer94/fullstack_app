@@ -14,8 +14,11 @@ export class UserController {
   getUsers() {
     return this.userService.getUsers();
   }
+
   @Get('me')
   getMe(@GetUser() user: User) {
+    delete user.hashedRT;
+
     return user;
   }
 

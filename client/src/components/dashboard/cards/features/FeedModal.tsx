@@ -46,7 +46,6 @@ export default function FeedModal({
               : parsedFeed}
           </TypographyP>
         </div>
-
         <DialogFooter className='mt-10'>
           <div className='flex flex-row justify-between items-center w-full'>
             <TypographyMuted>{pubDate}</TypographyMuted>
