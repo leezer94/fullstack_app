@@ -21,7 +21,7 @@ export default async function RootLayout({
   return (
     <QueryProvider>
       <html lang='en'>
-        <body>
+        <body></body>
           <GNB session={session} />
           <main>{children}</main>
           <Footer />
