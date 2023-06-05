@@ -10,5 +10,8 @@ export class EditTodoDto {
 
   @IsString()
   @IsOptional()
-  status?: 'NOT_STARTED' | 'IN PROGRESS' | 'COMPLETED';
+  status?: 'BACKLOG' | 'TODO' | 'IN_PROGRESS' | 'DONE' | 'CANCELED';
+
+  @IsString()
+  priority: 'Low' | 'Medium' | 'High';
 }
