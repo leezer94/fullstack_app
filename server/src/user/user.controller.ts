@@ -1,9 +1,18 @@
-import { Body, Controller, Get, Patch, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Patch,
+  Req,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
 import { JwtGuard } from '../auth/guard/jwt.guard';
 import { User } from '@prisma/client';
 import { GetUser } from '../auth/decorator/get-user.decorator';
 import { EditUserDto } from './dto/edit-user.dto';
 import { UserService } from './user.service';
+import { Request, Response } from 'express';
 
 @UseGuards(JwtGuard)
 @Controller('users')
@@ -16,8 +25,14 @@ export class UserController {
   }
 
   @Get('me')
-  getMe(@GetUser() user: User) {
-    delete user.hashedRT;
+  getMe(
+    @Req() req: Request,
+    @GetUser() user: User,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    const token = req.cookies['access_token'];
+
+    res.header('Authorization', `Bearer ${token}`);
 
     return user;
   }

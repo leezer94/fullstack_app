@@ -10,6 +10,14 @@ export class UserService {
     return await this.prisma.user.findMany();
   }
 
+  async getMe(userId: number) {
+    return await this.prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+  }
+
   async editUser(userId: number, dto: EditUserDto) {
     const user = await this.prisma.user.update({
       where: {

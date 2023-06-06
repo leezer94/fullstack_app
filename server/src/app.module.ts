@@ -27,11 +27,11 @@ import { GithubModule } from './github/github.module';
     RssModule,
     GithubModule,
   ],
-  providers: [
-    {
-      provide: APP_GUARD,
-      useClass: JwtGuard,
-    },
-  ],
+  // providers: [
+  //   {
+  //     provide: APP_GUARD,
+  //     useClass: JwtGuard,
+  //   },
+  // ],
 })
 export class AppModule {}
