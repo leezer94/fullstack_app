@@ -1,4 +1,3 @@
-import { Suspense } from 'react';
 import {
   GossipCard,
   GithubTrends,
@@ -9,7 +8,7 @@ import {
 } from '@/components/dashboard';
 import { CategoryContextProvider } from '../contexts/categoryContext';
 
-export default function Home() {
+export default async function Home() {
   return (
     <div className='p-10 w-full h-full border-2'>
       <div className='flex gap-5 mb-5'>

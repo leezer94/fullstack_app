@@ -13,7 +13,8 @@ export const useAuth = () => {
       onSuccess: ({
         access_token,
       }: Pick<AuthType, 'access_token' | 'refresh_token'>) => {
-        localStorage.setItem('access_token', access_token);
+        // localStorage.setItem('access_token', access_token);
+        access_token;
         router.push('/');
       },
       onSettled: () => toast({ title: 'Succeed to Sign In' }),
