@@ -37,7 +37,9 @@ export default function UserStatus({
             </Link>
           ) : (
             <DropDownAvatar
-              avatarLink='https://github.com/leezer94.png'
+              avatarLink={
+                session.profileImage || 'https://i.stack.imgur.com/frlIf.png'
+              }
               userName={session.firstName}
             />
           )}
