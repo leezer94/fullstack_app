@@ -47,5 +47,6 @@ export const getSession = async (): Promise<Partial<UserInformationType>> => {
   return data;
 };
 
-export const postLogout = async (): Promise<() => void> =>
-  await axiosClient.post('/auth/logout');
+export const postLogout = async (): Promise<() => void> => {
+  return await axiosClient.post('/auth/logout', {}, { withCredentials: true });
+};

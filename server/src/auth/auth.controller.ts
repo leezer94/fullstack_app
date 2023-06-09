@@ -4,7 +4,6 @@ import {
   HttpCode,
   HttpStatus,
   Post,
-  Req,
   Res,
   UseGuards,
 } from '@nestjs/common';
@@ -40,15 +39,10 @@ export class AuthController {
   @Post('logout')
   @HttpCode(HttpStatus.OK)
   logout(
-    @Req() req: Request,
-    @GetUser('sub') userId: number,
+    @GetUser('id') userId: number,
     @Res({ passthrough: true }) res: Response,
   ) {
-    const token = req.cookies.authorization;
-
-    res.setHeader('Authorization', `Bearer ${token}`);
-    res.header('Authorization', `Bearer ${token}`);
-
+    res.clearCookie('authorization', { path: '/' });
     return this.authService.logout(userId);
   }
 

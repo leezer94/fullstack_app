@@ -1,6 +1,8 @@
 'use client';
 
 import type { User } from '@/types';
+import { useState, useEffect } from 'react';
+import { cookies } from 'next/dist/client/components/headers';
 import Link from 'next/link';
 import {
   buttonVariants,
