@@ -1,5 +1,5 @@
 'use client';
-import { ReactNode } from 'react';
+import { ReactNode, Suspense } from 'react';
 import { Link as LinkIcon } from 'lucide-react';
 import Link from 'next/link';
 import {
@@ -13,12 +13,13 @@ import {
   TypographyP,
   buttonVariants,
 } from '@/components/ui';
+import { ArticlesSkeleton } from '@/components/ui/skeletons';
 import { sanitizeDescription } from '@/lib';
 import { useParsedFeed } from '@/lib/hooks/feed';
-import { Feed } from '@/types';
+import { Feed, PathType } from '@/types';
 
 type ModalProps = {
-  type: 'FeArticles' | 'Gossip' | 'CSS-tricks' | 'Dev.to';
+  type: PathType;
   button: ReactNode;
   feed: Feed;
 };
@@ -37,15 +38,18 @@ export default function FeedModal({
         <DialogHeader className='mb-10'>
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
-        <div className='overflow-hidden'>
-          <TypographyP className='max-h-[300px] overflow-auto'>
-            {type === 'Gossip'
-              ? description
-              : type === 'FeArticles'
-              ? sanitizeDescription(parsedFeed)
-              : parsedFeed}
-          </TypographyP>
-        </div>
+        <Suspense fallback={<ArticlesSkeleton />}>
+          <div className='overflow-hidden'>
+            <TypographyP className='max-h-[300px] overflow-auto'>
+              {type === 'bbc-football'
+                ? description
+                : type === 'korean-fe'
+                ? sanitizeDescription(parsedFeed)
+                : parsedFeed}
+            </TypographyP>
+          </div>
+        </Suspense>
+
         <DialogFooter className='mt-10'>
           <div className='flex flex-row justify-between items-center w-full'>
             <TypographyMuted>{pubDate}</TypographyMuted>

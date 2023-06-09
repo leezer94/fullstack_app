@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Selection } from '@/components/dashboard/cards/features';
+import { Selection } from '@/components/dashboard/features';
 import {
   buttonVariants,
   Card,
@@ -11,14 +11,16 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui';
+import { cn } from '@/lib';
 
-export default function TodosCard() {
+export default function TodosCard({ className }: { className?: string }) {
   return (
-    <Card className='min-h-max'>
+    <Card className={cn('min-h-max', className)}>
       <CardHeader>
         <div className='flex justify-between'>
           <CardTitle>Todos</CardTitle>
           <Selection
+            className='hidden'
             placeholder='SortBy'
             items={['Priority', 'Due Date']}
             button={

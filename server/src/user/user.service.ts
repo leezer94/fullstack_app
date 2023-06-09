@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { EditUserDto } from './dto/edit-user.dto';
+import { Request, Response } from 'express';
 
 @Injectable()
 export class UserService {
@@ -10,7 +11,10 @@ export class UserService {
     return await this.prisma.user.findMany();
   }
 
-  async getMe(userId: number) {
+  async getMe(req: Request, userId: number, res: Response) {
+    const token = req.cookies['authorization'];
+
+    console.log({ token }, 'getMe');
     return await this.prisma.user.findUnique({
       where: {
         id: userId,

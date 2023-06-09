@@ -1,6 +1,6 @@
-import { Controller, Get, Req, Res } from '@nestjs/common';
-import { Request, Response } from 'express';
+import { Controller, Get } from '@nestjs/common';
 import { Public } from 'src/auth/decorator';
+import { RSS_FEEDS } from 'src/constants';
 import { RssService } from './rss.service';
 
 @Controller('rss')
@@ -10,32 +10,30 @@ export class RssController {
   @Public()
   @Get('korean-fe')
   getKoreanFEArticles() {
-    const url = 'https://kofearticle.substack.com/feed';
-
-    return this.rssService.getRssFeed(url);
+    return this.rssService.getRssFeed(RSS_FEEDS.FE_ARTICLES);
   }
 
   @Public()
   @Get('bbc-football')
   getBBCFootballArticles() {
-    const url = 'https://feeds.bbci.co.uk/sport/football/rss.xml';
-
-    return this.rssService.getRssFeed(url);
+    return this.rssService.getRssFeed(RSS_FEEDS.BBC_FOOTBALL);
   }
 
   @Public()
   @Get('css-tricks')
   getCssTricksArticles() {
-    const url = 'https://css-tricks.com/feed/';
-
-    return this.rssService.getRssFeed(url);
+    return this.rssService.getRssFeed(RSS_FEEDS.CSS_TRICS);
   }
 
   @Public()
   @Get('dev-to')
   getDevToArticles() {
-    const url = 'https://dev.to/feed';
+    return this.rssService.getRssFeed(RSS_FEEDS.DEV_TO);
+  }
 
-    return this.rssService.getRssFeed(url);
+  @Public()
+  @Get('tkdodo')
+  getTKDODOArticles() {
+    return this.rssService.getRssFeed(RSS_FEEDS.TKDODO);
   }
 }

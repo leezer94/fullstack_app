@@ -30,7 +30,9 @@ export class UserController {
     @GetUser() user: User,
     @Res({ passthrough: true }) res: Response,
   ) {
-    const token = req.cookies['access_token'];
+    const token = req.cookies['authorization'];
+
+    // console.log('token', { token });
 
     res.header('Authorization', `Bearer ${token}`);
 

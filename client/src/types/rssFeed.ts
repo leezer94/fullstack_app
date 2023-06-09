@@ -14,3 +14,10 @@ export interface RssFeedType {
   description: string;
   item: Feed[];
 }
+
+export type PathType =
+  | 'korean-fe'
+  | 'bbc-football'
+  | 'css-tricks'
+  | 'dev-to'
+  | 'tkdodo';

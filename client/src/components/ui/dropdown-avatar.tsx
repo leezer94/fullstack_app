@@ -26,7 +26,7 @@ export function DropDownAvatar({
   userName,
 }: {
   avatarLink: string;
-  userName: string;
+  userName?: string;
 }) {
   const { handleLogout: logout } = useAuth();
   const handleLogout = useCallback(() => logout(), [logout]);
@@ -36,7 +36,7 @@ export function DropDownAvatar({
       <DropdownMenuTrigger>
         <Avatar className='w-[50px] h-[50px]'>
           <AvatarImage src={avatarLink} alt={`@${userName}`} />
-          <AvatarFallback>{userName}</AvatarFallback>
+          <AvatarFallback>{userName || 'annoymous'}</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent>

@@ -44,10 +44,10 @@ export class AuthController {
     @GetUser('sub') userId: number,
     @Res({ passthrough: true }) res: Response,
   ) {
-    const token = req.cookies.access_token;
+    const token = req.cookies.authorization;
 
     res.setHeader('Authorization', `Bearer ${token}`);
-    // res.header('Authorization', `Bearer ${token}`);
+    res.header('Authorization', `Bearer ${token}`);
 
     return this.authService.logout(userId);
   }

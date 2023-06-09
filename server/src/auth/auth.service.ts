@@ -66,13 +66,14 @@ export class AuthService {
 
     await this.updateRefreshTokenHash(user.id, tokens.refresh_token);
 
-    res.setHeader('Authorization', `Bearer ${tokens.access_token}`);
-    res.cookie('access_token', tokens.access_token, {
+    res.cookie('authorization', tokens.access_token, {
       httpOnly: true,
       maxAge: 60 * 15 * 30 * 100,
-      secure: true,
+      secure: false,
       sameSite: 'lax',
     });
+
+    res.header('Authorization', `Bearer ${tokens.access_token}`);
 
     return tokens;
   }

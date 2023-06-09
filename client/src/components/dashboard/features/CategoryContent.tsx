@@ -1,7 +1,8 @@
 'use client';
 
-import { getCssTricksArticles, getDevToArticles } from '@/api';
-import FeedModal from '@/components/dashboard/cards/features/FeedModal';
+import type { PathType } from '@/types';
+import { getRssFeeds } from '@/api';
+import FeedModal from '@/components/dashboard/features/FeedModal';
 import { Separator } from '@/components/ui';
 
 import { useCustomQuery } from '@/lib/hooks/query';
@@ -9,24 +10,22 @@ import { useCustomQuery } from '@/lib/hooks/query';
 export default function CategoryContent({
   currentCategory,
 }: {
-  currentCategory: string;
+  currentCategory: PathType | string;
 }) {
-  const { data: cssTricksArticles } = useCustomQuery(
-    ['css-articles'],
-    getCssTricksArticles
+  const { data: cssTricksArticles } = useCustomQuery(['css-articles'], () =>
+    getRssFeeds('css-tricks')
   );
-  const { data: devToArticles } = useCustomQuery(
-    ['dev.to-articles'],
-    getDevToArticles
+  const { data: devToArticles } = useCustomQuery(['dev.to-articles'], () =>
+    getRssFeeds('dev-to')
   );
 
   return (
     <>
-      {currentCategory === 'Dev.to'
+      {currentCategory === 'dev-to'
         ? devToArticles?.item.map((feed, idx) => (
             <div key={feed.link + idx} className='overflow-auto'>
               <FeedModal
-                type='Dev.to'
+                type='dev-to'
                 button={
                   <p className='pb-5 pt-5 cursor-pointer hover:text-red-300'>
                     {feed.title}
@@ -37,11 +36,11 @@ export default function CategoryContent({
               <Separator />
             </div>
           ))
-        : currentCategory === 'CSS-tricks'
+        : currentCategory === 'css-tricks'
         ? cssTricksArticles?.item.map((feed, idx) => (
             <div key={feed.link + idx} className='overflow-auto'>
               <FeedModal
-                type='CSS-tricks'
+                type='css-tricks'
                 button={
                   <p className='pb-5 pt-5 cursor-pointer hover:text-red-300'>
                     {feed.title}

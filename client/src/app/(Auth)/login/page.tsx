@@ -14,7 +14,7 @@ import AuthenticationImage from '../../../../public/authentication.avif';
 
 export default function Page() {
   return (
-    <div className='flex h-screen max-h-screen'>
+    <div className='flex h-screen max-h-screen min-w-[200px]'>
       <div className='hidden w-full h-full lg:block'>
         <Image
           priority
@@ -25,7 +25,7 @@ export default function Page() {
       </div>
       <div className='w-full flex justify-center items-center'>
         <div className='absolute top-4 px-5 w-2/4'>
-          <div className='flex justify-center lg:justify-between'>
+          <div className='hidden justify-center lg:justify-between lg:flex'>
             <Link
               href='/'
               className={buttonVariants({ variant: 'ghost', size: 'sm' })}
@@ -55,13 +55,13 @@ export default function Page() {
             <SignInModal
               button={
                 <Button className='mb-5' type='button' size='lg'>
-                  <Mail className='mr-2 h-4 w-4' />
+                  <Mail className='hidden mr-2 h-4 w-4 md:flex' />
                   Sign In With E-mail
                 </Button>
               }
             />
             <Button variant='outline' size='lg'>
-              <GithubIcon className='mr-2 h-4 w-4' />
+              <GithubIcon className='hidden mr-2 h-4 w-4 md:flex' />
               Sign In With Github
             </Button>
           </div>

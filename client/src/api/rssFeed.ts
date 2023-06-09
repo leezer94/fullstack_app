@@ -1,27 +1,8 @@
-import axios from 'axios';
+import type { PathType, RssFeedType } from '@/types';
+import axiosClient from './axiosInstance';
 
-import { RssFeedType } from '@/types';
-
-export const getFeArticles = async (): Promise<RssFeedType> => {
-  const { data } = await axios.get('http://localhost:8000/rss/korean-fe');
-
-  return data;
-};
-
-export const getFootballGossip = async (): Promise<RssFeedType> => {
-  const { data } = await axios.get('http://localhost:8000/rss/bbc-football');
-
-  return data;
-};
-
-export const getCssTricksArticles = async (): Promise<RssFeedType> => {
-  const { data } = await axios.get('http://localhost:8000/rss/css-tricks');
-
-  return data;
-};
-
-export const getDevToArticles = async (): Promise<RssFeedType> => {
-  const { data } = await axios.get('http://localhost:8000/rss/dev-to');
+export const getRssFeeds = async (path: PathType): Promise<RssFeedType> => {
+  const { data } = await axiosClient.get(`rss/${path}`);
 
   return data;
 };
