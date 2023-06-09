@@ -1,5 +1,6 @@
 'use client';
 
+import type { FeedsType } from '@/components/dashboard/articles/Articles';
 import { ReactNode, useContext } from 'react';
 import {
   Select,
@@ -9,18 +10,25 @@ import {
   SelectValue,
 } from '@/components/ui';
 import { SetCategoryContext } from '@/contexts';
+import { cn } from '../../../lib/utils';
 
 interface Props {
+  className?: string;
   placeholder: string;
-  items: string[];
+  items: FeedsType[];
   button?: ReactNode;
 }
 
-export default function Selection({ placeholder, items, button }: Props) {
+export default function Selection({
+  className,
+  placeholder,
+  items,
+  button,
+}: Props) {
   const setCurrentCategory = useContext(SetCategoryContext);
 
   return (
-    <div className='flex gap-2'>
+    <div className={cn('flex gap-2', className)}>
       <Select
         onValueChange={(value) =>
           setCurrentCategory !== null && setCurrentCategory(value)
@@ -30,9 +38,9 @@ export default function Selection({ placeholder, items, button }: Props) {
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent>
-          {items.map((item: string, idx: number) => (
-            <SelectItem key={`${item}/${idx}`} value={item}>
-              {item}
+          {items.map(({ title }: FeedsType, idx: number) => (
+            <SelectItem key={`${title}/${idx}`} value={title}>
+              {title}
             </SelectItem>
           ))}
         </SelectContent>

@@ -33,7 +33,8 @@ CREATE TABLE "todos" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "title" TEXT NOT NULL,
     "description" TEXT,
-    "status" TEXT NOT NULL,
+    "status" TEXT NOT NULL DEFAULT 'TODO',
+    "priority" TEXT NOT NULL,
     "userId" INTEGER NOT NULL,
     "roomId" INTEGER NOT NULL,
 

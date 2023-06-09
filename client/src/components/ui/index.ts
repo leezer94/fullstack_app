@@ -15,3 +15,4 @@ export * from './hover-card';
 export * from './hover-avatar';
 export * from './dropdown-menu';
 export * from './dropdown-avatar';
+export * from './collapsible';

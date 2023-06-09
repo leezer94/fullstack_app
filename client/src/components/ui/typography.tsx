@@ -2,9 +2,20 @@ import { cn } from '@/lib';
 
 export type Typography = string;
 
-export function TypographyH1({ children }: { children: Typography }) {
+export function TypographyH1({
+  children,
+  className,
+}: {
+  children: Typography;
+  className?: string;
+}) {
   return (
-    <h1 className='scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl'>
+    <h1
+      className={cn(
+        'scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl',
+        className
+      )}
+    >
       {children}
     </h1>
   );
@@ -48,6 +59,14 @@ export function TypographyP({
   );
 }
 
-export function TypographyMuted({ children }: { children: Typography }) {
-  return <p className='text-sm text-muted-foreground'>{children}</p>;
+export function TypographyMuted({
+  children,
+  className,
+}: {
+  children: Typography;
+  className?: string;
+}) {
+  return (
+    <p className={cn('text-sm text-muted-foreground', className)}>{children}</p>
+  );
 }

@@ -1,10 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import type { User } from '@/types';
 import Link from 'next/link';
-import { UserTabs } from '@/components/dashboard/cards/features';
 import {
-  ButtonLoading,
   buttonVariants,
   Card,
   CardContent,
@@ -14,31 +12,23 @@ import {
 } from '@/components/ui';
 import { cn } from '@/lib/utils';
 
-export default function UserStatus({ className }: { className?: string }) {
-  const [token, setToken] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  useEffect(() => {
-    setIsLoading(true);
-    const access_token = localStorage.getItem('access_token');
-
-    if (access_token) {
-      setIsLoading(false);
-      setToken(access_token);
-    }
-  }, [token, isLoading]);
-
+export default function UserStatus({
+  className,
+  session,
+}: {
+  className?: string;
+  session: User &
+    Partial<{
+      statusCode: 401;
+      message: 'Unauthorized';
+    }>;
+}) {
   return (
-    <Card className={cn('w-3/6', className)}>
+    <Card className={cn('w-full', className)}>
       <CardHeader>
         <div className='flex justify-between'>
           <CardTitle>User</CardTitle>
-          {token ? (
-            <DropDownAvatar
-              avatarLink='https://github.com/leezer94.png'
-              userName='Leezer'
-            />
-          ) : isLoading ? (
+          {session?.message === 'Unauthorized' ? (
             <Link
               className={buttonVariants({ variant: 'outline', size: 'sm' })}
               href='/login'
@@ -46,12 +36,16 @@ export default function UserStatus({ className }: { className?: string }) {
               Sign In
             </Link>
           ) : (
-            <ButtonLoading />
+            <DropDownAvatar
+              avatarLink={
+                session.profileImage || 'https://i.stack.imgur.com/frlIf.png'
+              }
+              userName={session.firstName}
+            />
           )}
         </div>
-        <CardContent>
-          <UserTabs />
-        </CardContent>
+        <p>{session?.email}</p>
+        <CardContent>{/* <UserTabs /> */}</CardContent>
       </CardHeader>
     </Card>
   );

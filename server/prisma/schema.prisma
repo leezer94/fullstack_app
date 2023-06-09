@@ -43,7 +43,8 @@ model Todo {
   updatedAt   DateTime @updatedAt
   title       String
   description String?
-  status      String
+  status      String  @default("TODO")
+  priority    String   
   userId      Int
   roomId      Int
 

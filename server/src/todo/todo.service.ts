@@ -19,7 +19,7 @@ export class TodoService {
     const newTodo = await this.prisma.todo.create({
       data: {
         userId,
-        status: 'NOT_STARTED',
+        status: 'TODO',
         ...dto,
       },
     });
@@ -42,7 +42,11 @@ export class TodoService {
       },
     });
 
-    if (!['NOT_STARTED', 'IN_PROGRESS', 'COMPLETED'].includes(dto.status)) {
+    if (
+      !['BACKLOG', 'TODO', 'IN_PROGRESS', 'DONE', 'CANCELED'].includes(
+        dto.status,
+      )
+    ) {
       throw new ForbiddenException('Not valid status');
     }
 

@@ -8,7 +8,7 @@ import * as argon from 'argon2';
 import { SECRET_KEY } from '../constants/keys';
 import { EXPIRATION_TIME } from '../constants/expirations';
 import { ERROR_MESSAGE } from '../constants/errorMessages';
-import { Response } from 'express';
+import { Request, Response } from 'express';
 
 @Injectable()
 export class AuthService {
@@ -64,12 +64,16 @@ export class AuthService {
 
     const tokens = await this.signTokens(user.id, user.email);
 
-    res.cookie('refresh_token', tokens.refresh_token, {
+    await this.updateRefreshTokenHash(user.id, tokens.refresh_token);
+
+    res.cookie('authorization', tokens.access_token, {
       httpOnly: true,
-      maxAge: EXPIRATION_TIME.REFRESH_TOKEN,
+      maxAge: 60 * 15 * 30 * 100,
+      secure: false,
+      sameSite: 'lax',
     });
 
-    await this.updateRefreshTokenHash(user.id, tokens.refresh_token);
+    res.header('Authorization', `Bearer ${tokens.access_token}`);
 
     return tokens;
   }

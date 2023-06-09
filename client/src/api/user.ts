@@ -1,10 +1,13 @@
 import type { User } from '@/types';
-import axiosClient from './axiosInstance';
+import axios from 'axios';
 
-export const getMe = async (): Promise<User> => {
-  const { data } = await axiosClient.get('/users/me');
-
-  console.log('data', data);
+export const getMe = async (token: string | undefined): Promise<User> => {
+  const { data } = await axios.get('/users/me', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    withCredentials: true,
+  });
 
   return data;
 };

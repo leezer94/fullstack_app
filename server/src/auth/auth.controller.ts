@@ -4,6 +4,7 @@ import {
   HttpCode,
   HttpStatus,
   Post,
+  Req,
   Res,
   UseGuards,
 } from '@nestjs/common';
@@ -11,7 +12,7 @@ import { AuthService } from './auth.service';
 import { AuthDto } from './dto';
 import { RtGuard } from './guard';
 import { GetUser, Public } from '../auth/decorator';
-import { Response } from 'express';
+import { Response, Request } from 'express';
 
 //  this does the job for '/auth/'
 @Controller('auth')
@@ -36,10 +37,18 @@ export class AuthController {
     return this.authService.signin(dto, res);
   }
 
-  // @UseGuards(JwtGuard)
   @Post('logout')
   @HttpCode(HttpStatus.OK)
-  logout(@GetUser('sub') userId: number) {
+  logout(
+    @Req() req: Request,
+    @GetUser('sub') userId: number,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    const token = req.cookies.authorization;
+
+    res.setHeader('Authorization', `Bearer ${token}`);
+    res.header('Authorization', `Bearer ${token}`);
+
     return this.authService.logout(userId);
   }
 

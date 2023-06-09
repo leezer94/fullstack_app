@@ -32,7 +32,7 @@ export default function SigninForm() {
     onSuccess: ({
       access_token,
     }: Pick<AuthType, 'access_token' | 'refresh_token'>) => {
-      localStorage.setItem('access_token', access_token);
+      // localStorage.setItem('access_token', access_token);
       router.push('/');
       toast({ title: 'Welcome!', description: 'Success to Login' });
     },
