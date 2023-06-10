@@ -1,4 +1,6 @@
 import { ReactNode } from 'react';
+import { getSession } from '@/api';
+import PrivateRouter from '@/components/helper/PrivateRouter';
 
 export const metadata: Metadata = {
   title: 'Todos | Okto',
@@ -6,6 +8,15 @@ export const metadata: Metadata = {
     'Share your todo lists and work on it with people who might interest!',
 };
 
-export default function AuthLayout({ children }: { children: ReactNode }) {
-  return <main>{children}</main>;
+export default async function TodoLayout({
+  children,
+}: {
+  children: ReactNode;
+}) {
+  const session = await getSession();
+  return (
+    <PrivateRouter session={session}>
+      <main>{children}</main>
+    </PrivateRouter>
+  );
 }

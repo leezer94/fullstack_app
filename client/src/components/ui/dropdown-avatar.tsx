@@ -25,7 +25,7 @@ export function DropDownAvatar({
   avatarLink,
   userName,
 }: {
-  avatarLink: string;
+  avatarLink?: string;
   userName?: string;
 }) {
   const { handleLogout: logout } = useAuth();
@@ -35,7 +35,10 @@ export function DropDownAvatar({
     <DropdownMenu>
       <DropdownMenuTrigger>
         <Avatar className='w-[50px] h-[50px]'>
-          <AvatarImage src={avatarLink} alt={`@${userName}`} />
+          <AvatarImage
+            src={avatarLink || 'https://i.stack.imgur.com/frlIf.png'}
+            alt={`@${userName}`}
+          />
           <AvatarFallback>{userName || 'annoymous'}</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
@@ -50,9 +53,9 @@ export function DropDownAvatar({
         <DropdownMenuItem>Team</DropdownMenuItem>
         <DropdownMenuSeparator />
         <Dialog>
-          <DialogTrigger className='flex justify-center' asChild>
-            <Button className='h-4/6' variant='outline' size='lg'>
-              Sign Out
+          <DialogTrigger asChild>
+            <Button className='h-4/6' variant='ghost' size='lg'>
+              Sign out
             </Button>
           </DialogTrigger>
           <DialogContent>

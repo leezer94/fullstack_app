@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import Link from 'next/link';
 import { Selection } from '@/components/dashboard/features';
 import {
@@ -20,9 +21,7 @@ export default function TodosCard({ className }: { className?: string }) {
         <div className='flex justify-between'>
           <CardTitle>Todos</CardTitle>
           <Selection
-            className='hidden'
             placeholder='SortBy'
-            items={['Priority', 'Due Date']}
             button={
               <Link
                 href='/todos'

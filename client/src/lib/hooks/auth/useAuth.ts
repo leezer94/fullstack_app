@@ -1,6 +1,6 @@
-import type { AuthType, UserInformationType } from '@/types';
+import type { UserInformationType } from '@/types';
 import { useRouter } from 'next/navigation';
-import { postLogout, postSignin, postSignUp } from '@/api';
+import { postLogout, postSignin, postSignUp, refreshToken } from '@/api';
 import { useCustomMutation } from '@/lib/hooks/query';
 import { useToast } from '../toast';
 
@@ -10,13 +10,7 @@ export const useAuth = () => {
   const { mutate: handleSignIn, error: signinError } = useCustomMutation(
     postSignin,
     {
-      onSuccess: ({
-        access_token,
-      }: Pick<AuthType, 'access_token' | 'refresh_token'>) => {
-        // localStorage.setItem('access_token', access_token);
-        access_token;
-        router.push('/');
-      },
+      onSuccess: () => router.push('/'),
       onSettled: () => toast({ title: 'Succeed to Sign In' }),
     }
   );
@@ -34,14 +28,19 @@ export const useAuth = () => {
     postLogout,
     {
       onSuccess: () => {
-        localStorage.removeItem('access_token');
         toast({
           title: 'Succeed to Sign out',
           description: 'We hope to see you again!',
         });
+
+        router.refresh();
       },
     }
   );
+
+  const { mutate: handleRefreshToken, error: refreshTokenError } =
+    useCustomMutation(refreshToken);
+
   return {
     handleSignIn,
     signinError,
@@ -49,5 +48,7 @@ export const useAuth = () => {
     signupError,
     handleLogout,
     logoutError,
+    handleRefreshToken,
+    refreshTokenError,
   };
 };

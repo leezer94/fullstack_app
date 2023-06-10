@@ -21,17 +21,39 @@ export function TypographyH1({
   );
 }
 
-export function TypographyH2({ children }: { children: Typography }) {
+export function TypographyH2({
+  children,
+  className,
+}: {
+  children: Typography;
+  className?: string;
+}) {
   return (
-    <h2 className='scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0'>
+    <h2
+      className={cn(
+        'scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0',
+        className
+      )}
+    >
       {children}
     </h2>
   );
 }
 
-export function TypographyH3({ children }: { children: Typography }) {
+export function TypographyH3({
+  children,
+  className,
+}: {
+  children: Typography;
+  className?: string;
+}) {
   return (
-    <h3 className='scroll-m-20 text-2xl font-semibold tracking-tight'>
+    <h3
+      className={cn(
+        'scroll-m-20 text-2xl font-semibold tracking-tight',
+        className
+      )}
+    >
       {children}
     </h3>
   );

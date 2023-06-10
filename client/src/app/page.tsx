@@ -1,18 +1,6 @@
-import { cookies } from 'next/dist/client/components/headers';
+import { getSession } from '@/api';
 import { GithubTrends, TodosCard, UserStatus } from '@/components/dashboard';
 import { Articles } from '@/components/dashboard/articles';
-import { User } from '@/types';
-
-const getSession = async (): Promise<User> => {
-  const token = cookies().get('authorization')?.value;
-
-  return await fetch('http://localhost:8000/users/me', {
-    cache: 'no-store',
-    headers: new Headers({
-      Authorization: `Bearer ${token}`,
-    }),
-  }).then((res) => res.json());
-};
 
 export default async function Home() {
   const userSession = await getSession();
