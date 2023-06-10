@@ -1,4 +1,6 @@
 import { ReactNode } from 'react';
+import { getSession } from '@/api';
+import PrivateRouter from '@/components/helper/PrivateRouter';
 
 export const metadata: Metadata = {
   title: 'Todos | Okto',
