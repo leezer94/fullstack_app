@@ -15,7 +15,7 @@ import { cn } from '../../../lib/utils';
 interface Props {
   className?: string;
   placeholder: string;
-  items: FeedsType[];
+  items?: FeedsType[];
   button?: ReactNode;
 }
 
@@ -38,7 +38,7 @@ export default function Selection({
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent>
-          {items.map(({ title }: FeedsType, idx: number) => (
+          {items?.map(({ title }: FeedsType, idx: number) => (
             <SelectItem key={`${title}/${idx}`} value={title}>
               {title}
             </SelectItem>

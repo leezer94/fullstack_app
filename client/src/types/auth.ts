@@ -1,3 +1,5 @@
+import { User } from '@/types';
+
 export interface UserInformationType {
   id: number;
   email: string;
@@ -16,3 +18,9 @@ export interface AuthType {
   access_token: string;
   refresh_token: string;
 }
+
+export type SessionType = User &
+  Partial<{
+    statusCode: 401;
+    message: 'Unauthorized';
+  }>;

@@ -1,5 +1,5 @@
-import type { AuthType, UserInformationType } from '@/types';
-import axios from 'axios';
+import type { AuthType, User, UserInformationType } from '@/types';
+import { cookies } from 'next/dist/client/components/headers';
 import axiosClient from './axiosInstance';
 
 type SignInType = Pick<AuthType, 'email' | 'password'>;
@@ -36,17 +36,32 @@ export const postSignUp = async ({
   return data;
 };
 
-export const getSession = async (): Promise<Partial<UserInformationType>> => {
-  const token = localStorage.getItem('access_token');
-  const { data } = await axios.get('http://localhost:8000/users/me', {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  return data;
+export const postLogout = async (): Promise<() => void> => {
+  return await axiosClient.post('/auth/logout');
 };
 
-export const postLogout = async (): Promise<() => void> => {
-  return await axiosClient.post('/auth/logout', {}, { withCredentials: true });
+export const refreshToken = async (): Promise<
+  Pick<AuthType, 'access_token' | 'refresh_token'>
+> => {
+  return await axiosClient.post(
+    '/auth/refresh',
+    {},
+    {
+      headers: {
+        Authorization:
+          'Bearer "$argon2id$v=19$m=65536,t=3,p=4$7gxNZUivFMur292yAog3Og$bftWCtHKw+OQc/TSzx6+Kxnxxwk9aMIz4Rg3G5BD6gs"',
+      },
+    }
+  );
+};
+
+export const getSession = async (): Promise<User> => {
+  const token = cookies().get('authorization')?.value;
+
+  return await fetch('http://localhost:8000/users/me', {
+    cache: 'no-store',
+    headers: new Headers({
+      Authorization: `Bearer ${token}`,
+    }),
+  }).then((res) => res.json());
 };

@@ -10,6 +10,14 @@ import { EXPIRATION_TIME } from '../constants/expirations';
 import { ERROR_MESSAGE } from '../constants/errorMessages';
 import { Response } from 'express';
 
+export interface GithubUserTypes {
+  githubId: string;
+  avatar: string;
+  name: string;
+  description: string;
+  location: string;
+}
+
 @Injectable()
 export class AuthService {
   // where DI is happening
@@ -69,12 +77,12 @@ export class AuthService {
     res.cookie('authorization', tokens.access_token, {
       httpOnly: true,
       maxAge: 60 * 15 * 30 * 100,
-      secure: true,
+      secure: false,
       sameSite: 'lax',
-      path: '/',
     });
 
     res.header('Authorization', `Bearer ${tokens.access_token}`);
+    res.setHeader('Authorization', `Bearer ${tokens.access_token}`);
 
     return tokens;
   }
@@ -141,9 +149,11 @@ export class AuthService {
   async refreshTokens({
     userId,
     refreshToken,
+    res,
   }: {
     userId: number;
     refreshToken: string;
+    res: Response;
   }) {
     const user = await this.prisma.user.findUnique({
       where: {
@@ -160,6 +170,16 @@ export class AuthService {
     const tokens = await this.signTokens(user.id, user.email);
 
     await this.updateRefreshTokenHash(user.id, tokens.refresh_token);
+
+    res.cookie('authorization', tokens.access_token, {
+      httpOnly: true,
+      maxAge: 60 * 15 * 30 * 100,
+      secure: true,
+      sameSite: 'lax',
+      path: '/',
+    });
+
+    res.header('Authorization', `Bearer ${tokens.access_token}`);
 
     return tokens;
   }

@@ -1,6 +1,6 @@
 import type { UserInformationType } from '@/types';
 import { useRouter } from 'next/navigation';
-import { postLogout, postSignin, postSignUp } from '@/api';
+import { postLogout, postSignin, postSignUp, refreshToken } from '@/api';
 import { useCustomMutation } from '@/lib/hooks/query';
 import { useToast } from '../toast';
 
@@ -37,6 +37,10 @@ export const useAuth = () => {
       },
     }
   );
+
+  const { mutate: handleRefreshToken, error: refreshTokenError } =
+    useCustomMutation(refreshToken);
+
   return {
     handleSignIn,
     signinError,
@@ -44,5 +48,7 @@ export const useAuth = () => {
     signupError,
     handleLogout,
     logoutError,
+    handleRefreshToken,
+    refreshTokenError,
   };
 };

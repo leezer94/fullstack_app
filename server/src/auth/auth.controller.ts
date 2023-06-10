@@ -11,7 +11,7 @@ import { AuthService } from './auth.service';
 import { AuthDto } from './dto';
 import { RtGuard } from './guard';
 import { GetUser, Public } from '../auth/decorator';
-import { Response, Request } from 'express';
+import { Response } from 'express';
 
 //  this does the job for '/auth/'
 @Controller('auth')
@@ -53,10 +53,12 @@ export class AuthController {
   refreshTokens(
     @GetUser('sub') userId: number,
     @GetUser('refreshToken') refreshToken: string,
+    @Res({ passthrough: true }) res: Response,
   ) {
     return this.authService.refreshTokens({
       userId,
       refreshToken,
+      res,
     });
   }
 }

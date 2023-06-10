@@ -1,8 +1,6 @@
 'use client';
 
-import type { User } from '@/types';
-import { useState, useEffect } from 'react';
-import { cookies } from 'next/dist/client/components/headers';
+import type { SessionType } from '@/types';
 import Link from 'next/link';
 import {
   buttonVariants,
@@ -19,17 +17,13 @@ export default function UserStatus({
   session,
 }: {
   className?: string;
-  session: User &
-    Partial<{
-      statusCode: 401;
-      message: 'Unauthorized';
-    }>;
+  session: SessionType;
 }) {
   return (
     <Card className={cn('w-full', className)}>
       <CardHeader>
         <div className='flex justify-between'>
-          <CardTitle>User</CardTitle>
+          <CardTitle>{session.firstName || 'User'}</CardTitle>
           {session?.message === 'Unauthorized' ? (
             <Link
               className={buttonVariants({ variant: 'outline', size: 'sm' })}
@@ -39,14 +33,12 @@ export default function UserStatus({
             </Link>
           ) : (
             <DropDownAvatar
-              avatarLink={
-                session.profileImage || 'https://i.stack.imgur.com/frlIf.png'
-              }
-              userName={session.firstName}
+              avatarLink={session.profileImage}
+              userName={session.lastName}
             />
           )}
         </div>
-        <p>{session?.email}</p>
+
         <CardContent>{/* <UserTabs /> */}</CardContent>
       </CardHeader>
     </Card>

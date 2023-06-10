@@ -32,8 +32,6 @@ export class UserController {
   ) {
     const token = req.cookies['authorization'];
 
-    // console.log('token', { token });
-
     res.header('Authorization', `Bearer ${token}`);
 
     return user;
