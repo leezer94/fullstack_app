@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Param,
   Patch,
   Req,
   Res,
@@ -35,6 +36,11 @@ export class UserController {
     res.header('Authorization', `Bearer ${token}`);
 
     return user;
+  }
+
+  @Get(':id')
+  getUserById(@Param('id') userId: number) {
+    return this.userService.getUserById(Number(userId));
   }
 
   @Patch()
