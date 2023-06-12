@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback } from 'react';
+import Link from 'next/link';
 import {
   Button,
   Dialog,
@@ -9,7 +10,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui';
+import { cn } from '@/lib';
 import { useAuth } from '@/lib/hooks/auth';
+import { SessionType } from '@/types';
 import { Avatar, AvatarFallback, AvatarImage } from './avatar';
 import {
   DropdownMenu,
@@ -22,11 +25,13 @@ import {
 import { TypographyH4 } from './typography';
 
 export function DropDownAvatar({
+  className,
   avatarLink,
-  userName,
+  session,
 }: {
+  className?: string;
   avatarLink?: string;
-  userName?: string;
+  session: SessionType;
 }) {
   const { handleLogout: logout } = useAuth();
   const handleLogout = useCallback(() => logout(), [logout]);
@@ -34,23 +39,23 @@ export function DropDownAvatar({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <Avatar className='w-[50px] h-[50px]'>
+        <Avatar className={cn('w-[50px] h-[50px]', className)}>
           <AvatarImage
             src={avatarLink || 'https://i.stack.imgur.com/frlIf.png'}
-            alt={`@${userName}`}
+            alt={`@${session.lastName}`}
           />
-          <AvatarFallback>{userName || 'annoymous'}</AvatarFallback>
+          <AvatarFallback>{session.lastName || 'annoymous'}</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuLabel>
           @ {''}
-          {userName}
+          {session.lastName}
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Profile</DropdownMenuItem>
-        <DropdownMenuItem>Billing</DropdownMenuItem>
-        <DropdownMenuItem>Team</DropdownMenuItem>
+        <Link href={`/mypage/${session.id}`}>
+          <DropdownMenuItem>My Page</DropdownMenuItem>
+        </Link>
         <DropdownMenuSeparator />
         <Dialog>
           <DialogTrigger asChild>

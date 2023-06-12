@@ -16,3 +16,4 @@ export * from './hover-avatar';
 export * from './dropdown-menu';
 export * from './dropdown-avatar';
 export * from './collapsible';
+export * from './sheet';

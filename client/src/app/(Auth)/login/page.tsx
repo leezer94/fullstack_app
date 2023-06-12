@@ -1,14 +1,8 @@
 'use client';
 import { GithubIcon, Mail } from 'lucide-react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { SignInModal, SignUpModal } from '@/components/auth';
-import {
-  Button,
-  buttonVariants,
-  TypographyH2,
-  TypographyMuted,
-} from '@/components/ui';
+import { Button, TypographyH2, TypographyMuted } from '@/components/ui';
 
 import AuthenticationImage from '../../../../public/authentication.avif';
 
@@ -24,16 +18,6 @@ export default function Page() {
         />
       </div>
       <div className='w-full flex justify-center items-center'>
-        <div className='absolute top-4 px-5 w-2/4'>
-          <div className='hidden justify-center lg:justify-between lg:flex'>
-            <Link
-              href='/'
-              className={buttonVariants({ variant: 'ghost', size: 'sm' })}
-            >
-              Dashboard
-            </Link>
-          </div>
-        </div>
         <div className='flex flex-col justify-center w-3/6'>
           <div className='flex flex-col items-center mb-10'>
             <TypographyH2>Create an account</TypographyH2>

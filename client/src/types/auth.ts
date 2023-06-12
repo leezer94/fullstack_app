@@ -21,6 +21,6 @@ export interface AuthType {
 
 export type SessionType = User &
   Partial<{
-    statusCode: 401;
-    message: 'Unauthorized';
+    statusCode: number;
+    message: string;
   }>;

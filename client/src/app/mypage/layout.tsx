@@ -1,9 +1,8 @@
 import { ReactNode } from 'react';
 
 export const metadata: Metadata = {
-  title: 'Todos | Okto',
-  description:
-    'Share your todo lists and work on it with people who might interest!',
+  title: 'My Page | Okto',
+  description: 'Edit Your Page and Check out your user status !!',
 };
 
 export default async function TodoLayout({

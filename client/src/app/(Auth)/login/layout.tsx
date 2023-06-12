@@ -5,6 +5,10 @@ export const metadata: Metadata = {
   description: 'Create an Account with us!',
 };
 
-export default function AuthLayout({ children }: { children: ReactNode }) {
+export default async function AuthLayout({
+  children,
+}: {
+  children: ReactNode;
+}) {
   return <main>{children}</main>;
 }

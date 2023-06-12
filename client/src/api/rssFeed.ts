@@ -1,8 +1,9 @@
 import type { PathType, RssFeedType } from '@/types';
-import axiosClient from './axiosInstance';
 
 export const getRssFeeds = async (path: PathType): Promise<RssFeedType> => {
-  const { data } = await axiosClient.get(`rss/${path}`);
+  const response = await fetch(`http://localhost:8000/rss/${path}`, {
+    cache: 'no-store',
+  }).then((res) => res.json());
 
-  return data;
+  return response;
 };

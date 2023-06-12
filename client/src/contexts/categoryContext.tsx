@@ -8,13 +8,14 @@ import {
   PropsWithChildren,
 } from 'react';
 
-export const CategoryContext = createContext<string>('FE-Articles');
+export const CategoryContext = createContext<string>('Korean FE article');
 export const SetCategoryContext = createContext<Dispatch<
   SetStateAction<string>
 > | null>(null);
 
 export function CategoryContextProvider({ children }: PropsWithChildren) {
-  const [currentCategory, setCurrentCategory] = useState<string>('FE-Articles');
+  const [currentCategory, setCurrentCategory] =
+    useState<string>('Korean FE article');
 
   return (
     <CategoryContext.Provider value={currentCategory}>
