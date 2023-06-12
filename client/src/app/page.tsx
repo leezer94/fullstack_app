@@ -11,6 +11,7 @@ export default async function Home() {
     getRssFeeds('dev-to'),
     getRssFeeds('tkdodo'),
   ]);
+
   return (
     <div className='p-10'>
       <Card>
